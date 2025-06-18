@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fire Reporting System</title>
+    <title>نظام بلاغات الحريق</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <h1>Fire Reporting</h1>
+        <h1>بلاغات الحريق</h1>
         <form id="fire-report-form">
-            <label for="fire-description">Description of Fire:</label>
+            <label for="fire-description">وصف الحريق:</label>
             <textarea id="fire-description" required></textarea>
             <br>
-            <label for="fire-location">Location:</label>
+            <label for="fire-location">الموقع:</label>
             <input type="text" id="fire-location" readonly>
             <br>
-            <button type="submit">Submit Fire Report</button>
+            <button type="submit">إرسال بلاغ الحريق</button>
         </form>
         <div id="fire-location-map"></div>
     </div>
