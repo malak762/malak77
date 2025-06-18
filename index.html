@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Reporting System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Fire Reporting</h1>
+        <form id="fire-report-form">
+            <label for="fire-description">Description of Fire:</label>
+            <textarea id="fire-description" required></textarea>
+            <br>
+            <label for="fire-location">Location:</label>
+            <input type="text" id="fire-location" readonly>
+            <br>
+            <button type="submit">Submit Fire Report</button>
+        </form>
+        <div id="fire-location-map"></div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
