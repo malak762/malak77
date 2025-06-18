@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام بلاغات الحريق</title>
+    <title>تطبيق مراكز الدفاع المدني</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <h1>بلاغات الحريق</h1>
-        <form id="fire-report-form">
+        <h1 style="font-size: 30px; font-weight: bold;">أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في محافظة رام الله والبيرة</h1>
+
+        <!-- إضافة الخيارات -->
+        <div id="options">
+            <button id="center-info">التعرف على مراكز الدفاع المدني</button>
+            <button id="fire-report">تقديم بلاغ حريق</button>
+        </div>
+        
+        <!-- نموذج بلاغ الحريق -->
+        <form id="fire-report-form" style="display: none;">
             <label for="fire-description">وصف الحريق:</label>
             <textarea id="fire-description" required></textarea>
             <br>
@@ -18,7 +26,7 @@
             <br>
             <button type="submit">إرسال بلاغ الحريق</button>
         </form>
-        <div id="fire-location-map"></div>
+        
     </div>
     <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js"></script>
