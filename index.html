@@ -1,41 +1,117 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق مراكز الدفاع المدني</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <title>تطبيق مراكز الدفاع المدني</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .welcome-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    .welcome-box {
+      padding: 20px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.8);
+    }
+    .welcome-box h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+    .welcome-box p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .welcome-box button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      color: white;
+      background: #ff4500;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .welcome-box button:hover {
+      background: #e63900;
+    }
+    .welcome-box .instructions-button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 1em;
+      color: white;
+      background: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .welcome-box .instructions-button:hover {
+      background: #0056b3;
+    }
+    .map-image {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid white;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      max-width: 80%;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div id="app">
-        <!-- النص المعروض في وسط الصفحة -->
-        <div class="welcome-text">
-            <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في محافظة رام الله والبيرة</h1>
-        </div>
-
-        <!-- إضافة الصورة تحت العنوان -->
-        <img src="https://raw.githubusercontent.com/yourusername/fire-reporting-app/main/images/fire1.jpeg" alt="صورة مراكز الدفاع المدني" style="width: 100%; max-width: 600px; margin-top: 20px;">
-        
-        <!-- إضافة الخيارات -->
-        <div id="options">
-            <button id="center-info">التعرف على مراكز الدفاع المدني</button>
-            <button id="fire-report">تقديم بلاغ حريق</button>
-        </div>
-        
-        <!-- نموذج بلاغ الحريق -->
-        <form id="fire-report-form" style="display: none;">
-            <label for="fire-description">وصف الحريق:</label>
-            <textarea id="fire-description" required></textarea>
-            <br>
-            <label for="fire-location">الموقع:</label>
-            <input type="text" id="fire-location" readonly>
-            <br>
-            <button type="submit">إرسال بلاغ الحريق</button>
-        </form>
-        
+  <!-- إضافة الصورة -->
+  <img src="pal.jpg" alt="خريطة فلسطين" class="map-image">
+  
+  <div class="welcome-container">
+    <div class="welcome-box">
+      <!-- النص في وسط الصفحة -->
+      <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في فلسطين</h1>
+      <p>استكشف مراكز الدفاع المدني في فلسطين وتعرف على خدماتها ومواقعها.</p>
+      
+      <!-- الأزرار للتنقل بين الصفحات -->
+      <button onclick="enterMap()">ابدأ الآن (عربي)</button>
+      <button onclick="enterMap2()">English</button>
+      
+      <!-- زر للإرشادات -->
+      <button class="instructions-button" onclick="showInstructions()">الإرشادات للمواطن</button>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js"></script>
-    <script src="app.js"></script>
+  </div>
+
+  <script>
+    function enterMap() {
+      window.location.href = "file:///C:/Users/sbarghouthi.MAIL-SRV/Downloads/finaaaaal/indexar.html";
+    }
+
+    function enterMap2() {
+      window.location.href = "file:///C:/Users/sbarghouthi.MAIL-SRV/Downloads/finaaaaal/indexeng.html";
+    }
+
+    function showInstructions() {
+      alert("مرحبًا بك في تطبيق مراكز الدفاع المدني!\n\n1. تصفح الخريطة لاستكشاف مواقع مراكز الدفاع المدني.\n2. انقر على أي مركز لمعرفة التفاصيل بما في ذلك ساعات العمل وبيانات الاتصال.\n3. إذا كنت بحاجة للمساعدة، لا تتردد في استخدام خدمة الطوارئ.\n4. استمتع بالاستفادة من خدمات مراكز الدفاع المدني في مختلف المناطق.");
+    }
+  </script>
 </body>
 </html>
