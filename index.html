@@ -8,7 +8,7 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background: url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
+      background: url('https://images.app.goo.gl/uZ5rnZ7KD5da5si48') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       flex-direction: column;
@@ -82,8 +82,8 @@
   </style>
 </head>
 <body>
-  <!-- إضافة الصورة -->
-  <img src="pal.jpg" alt="خريطة فلسطين" class="map-image">
+  <!-- إضافة الصورة من الرابط -->
+  <img src="https://raw.githubusercontent.com/yourusername/fire-reporting-app/main/images/pal.jpg" alt="خريطة فلسطين" class="map-image">
   
   <div class="welcome-container">
     <div class="welcome-box">
@@ -92,12 +92,29 @@
       <p>استكشف مراكز الدفاع المدني في فلسطين وتعرف على خدماتها ومواقعها.</p>
       
       <!-- الأزرار للتنقل بين الصفحات -->
-      <button onclick="enterMap()">ابدأ الآن (عربي)</button>
-      <button onclick="enterMap2()">English</button>
+      <button onclick="enterMap()">التعرف على مراكز الدفاع المدني</button>
+      <button onclick="showFireReportForm()">تقديم بلاغ حريق</button>
       
-      <!-- زر للإرشادات -->
-      <button class="instructions-button" onclick="showInstructions()">الإرشادات للمواطن</button>
+      <!-- زر خدمة الطوارئ -->
+      <button class="instructions-button" onclick="callEmergency()">رقم خدمة الطوارئ</button>
     </div>
+  </div>
+
+  <!-- نموذج تقديم بلاغ حريق -->
+  <div id="fire-report-form" style="display: none;">
+    <h2>تقديم بلاغ حريق</h2>
+    <label for="fire-location">اختر موقع الحريق:</label><br>
+    <input type="radio" id="current-location" name="location" value="current" onclick="getLocation()"> موقعك الحالي<br>
+    <input type="radio" id="other-location" name="location" value="other" onclick="showLocationInput()"> موقع آخر<br>
+
+    <!-- حقل لإدخال الموقع إذا اختار "موقع آخر" -->
+    <div id="location-input" style="display:none;">
+      <label for="other-location-input">أدخل الموقع:</label>
+      <input type="text" id="other-location-input" placeholder="أدخل الموقع هنا">
+    </div>
+
+    <br>
+    <button onclick="submitFireReport()">إرسال بلاغ الحريق</button>
   </div>
 
   <script>
@@ -105,12 +122,40 @@
       window.location.href = "file:///C:/Users/sbarghouthi.MAIL-SRV/Downloads/finaaaaal/indexar.html";
     }
 
-    function enterMap2() {
-      window.location.href = "file:///C:/Users/sbarghouthi.MAIL-SRV/Downloads/finaaaaal/indexeng.html";
+    function showFireReportForm() {
+      document.getElementById("fire-report-form").style.display = "block";
     }
 
     function showInstructions() {
       alert("مرحبًا بك في تطبيق مراكز الدفاع المدني!\n\n1. تصفح الخريطة لاستكشاف مواقع مراكز الدفاع المدني.\n2. انقر على أي مركز لمعرفة التفاصيل بما في ذلك ساعات العمل وبيانات الاتصال.\n3. إذا كنت بحاجة للمساعدة، لا تتردد في استخدام خدمة الطوارئ.\n4. استمتع بالاستفادة من خدمات مراكز الدفاع المدني في مختلف المناطق.");
+    }
+
+    function callEmergency() {
+      alert("رقم خدمة الطوارئ: 102");
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          alert("موقعك الحالي: " + position.coords.latitude + ", " + position.coords.longitude);
+        });
+      } else {
+        alert("لا تدعم هذه المتصفح ميزة الموقع.");
+      }
+    }
+
+    function showLocationInput() {
+      document.getElementById("location-input").style.display = "block";
+    }
+
+    function submitFireReport() {
+      const location = document.querySelector('input[name="location"]:checked').value;
+      if (location === 'current') {
+        alert("تم إرسال بلاغ حريق باستخدام الموقع الحالي.");
+      } else {
+        const otherLocation = document.getElementById("other-location-input").value;
+        alert("تم إرسال بلاغ حريق باستخدام الموقع: " + otherLocation);
+      }
     }
   </script>
 </body>
