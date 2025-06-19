@@ -63,59 +63,11 @@
 
     centers.forEach(center => {
       const marker = L.marker(center.coordinates);
-      const content = `
-        <div style="width: 250px;">
-          <h3>${center.name}</h3>
-          <p>${center.description}</p>
-        </div>
-      `;
-      marker.bindPopup(content);
+      marker.bindPopup(`<h3>${center.name}</h3><p>${center.description}</p>`);
       markers.addLayer(marker);
     });
 
     map.addLayer(markers);
-
-    // Translation functionality
-    let currentLanguage = 'ar';
-
-    async function translatePage(targetLanguage) {
-      const textElements = document.querySelectorAll('h3, p, button');
-      const textsToTranslate = Array.from(textElements).map(el => el.textContent);
-
-      const apiKey = 'YOUR_GOOGLE_TRANSLATE_API_KEY';
-      const url = 'https://translation.googleapis.com/language/translate/v2';
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          q: textsToTranslate,
-          target: targetLanguage,
-          source: currentLanguage,
-          key: apiKey,
-        }),
-      });
-
-      if (!response.ok) {
-        console.error('Translation API Error:', response.statusText);
-        return;
-      }
-
-      const data = await response.json();
-      const translatedTexts = data.data.translations.map(t => t.translatedText);
-
-      textElements.forEach((el, index) => {
-        el.textContent = translatedTexts[index];
-      });
-
-      currentLanguage = targetLanguage;
-    }
-
-    function toggleLanguage() {
-      const targetLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
-      translatePage(targetLanguage);
-    }
-
   </script>
 </body>
 </html>
