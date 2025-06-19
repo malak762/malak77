@@ -42,6 +42,7 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+    // تأكد من أن العنصر map موجود وأنه يملك ارتفاع كافٍ
     var map = L.map('map').setView([31.7767, 35.2332], 8);  // إحداثيات وسط فلسطين
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -60,9 +61,34 @@
         coordinates: [31.928, 35.218],
         description: "مركز يقع في مدينة البيرة."
       },
-      // إضافة باقي المراكز هنا...
+      {
+        name: "مركز بيرزيت",
+        coordinates: [31.969, 35.201],
+        description: "مركز يقع في مدينة بيرزيت."
+      },
+      {
+        name: "مركز نعلين",
+        coordinates: [31.946, 35.021],
+        description: "مركز يقع في قرية نعلين."
+      },
+      {
+        name: "مركز بيت لقيا",
+        coordinates: [31.867, 35.063],
+        description: "مركز يقع في قرية بيت لقيا."
+      },
+      {
+        name: "مركز الطيبة",
+        coordinates: [31.959, 35.296],
+        description: "مركز يقع في قرية الطيبة."
+      },
+      {
+        name: "مركز عبوين",
+        coordinates: [32.032, 35.199],
+        description: "مركز يقع في قرية عبوين."
+      }
     ];
 
+    // إضافة المراكز على الخريطة
     centers.forEach(center => {
       var marker = L.marker(center.coordinates).addTo(map);
       marker.bindPopup(`
