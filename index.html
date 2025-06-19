@@ -69,9 +69,8 @@
     .welcome-box .instructions-button:hover {
       background: #0056b3;
     }
-    #map {
-      height: 400px;
-      width: 100%;
+    .fire-report-form {
+      display: none;
       margin-top: 20px;
     }
   </style>
@@ -80,101 +79,57 @@
   <div class="welcome-container">
     <div class="welcome-box">
       <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في محافظة رام الله والبيرة</h1>
-      <p>ساعدنا في إنقاذ الأرواح... بلغ عن موقع الحريق الآن
-      كل ثانية بتفرق</p>
+      <p>ساعدنا في إنقاذ الأرواح... بلغ عن موقع الحريق الآن. كل ثانية بتفرق</p>
       
-      <button onclick="enterMap()">التعرف على مراكز الدفاع المدني في المحافظة</button>
-      <button class="instructions-button" onclick="callEmergency()">اتصل بنا</button>
+      <button onclick="window.location.href = 'mapPage.html';">التعرف على مراكز الدفاع المدني في المحافظة</button>
+      <button onclick="showFireReportForm()">تقديم بلاغ حريق</button>
     </div>
   </div>
 
-  <!-- خريطة Leaflet سيتم عرضها هنا -->
-  <div id="map" style="display:none;"></div>
+  <!-- نموذج تقديم بلاغ حريق -->
+  <div id="fire-report-form" class="fire-report-form">
+    <h2>تقديم بلاغ حريق</h2>
+    <label for="fire-location">اختر موقع الحريق:</label><br>
+    <input type="radio" id="current-location" name="location" value="current" onclick="getLocation()"> موقعك الحالي<br>
+    <input type="radio" id="other-location" name="location" value="other" onclick="showLocationInput()"> موقع آخر<br>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- حقل لإدخال الموقع إذا اختار "موقع آخر" -->
+    <div id="location-input" style="display:none;">
+      <label for="other-location-input">أدخل الموقع:</label>
+      <input type="text" id="other-location-input" placeholder="أدخل الموقع هنا">
+    </div>
+
+    <br>
+    <button onclick="submitFireReport()">إرسال بلاغ الحريق</button>
+  </div>
+
   <script>
-    function enterMap() {
-      document.querySelector("#map").style.display = "block";
-      
-      // إنشاء الخريطة
-      var map = L.map('map').setView([31.7767, 35.2332], 8);  // إحداثيات وسط فلسطين
-
-      // إضافة طبقة الخريطة
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-
-      // مراكز الدفاع المدني مع تفاصيلها
-      const markets = [
-        {
-          name: "مركز رام الله",
-          coordinates: [31.893, 35.187],
-          description: "مركز يقع في مدينة رام الله، وهو أكبر مركز في المحافظة، وتم انشاءه سنة 1976، يقع على مساحة 700 متر مربع، ويضم 10 مركبات إطفاء وإنقاذ، بالإضافة إلى 64 موظف",
-          images: ["sooq-ramallah.jpeg"],
-          
-        },
-        {
-          name: "مركز البيرة",
-          coordinates: [31.928, 35.218],
-          description: "مركز يقع في مدينة البيرة، وهو أقدم مركز في المحافظة حيث تم انشاءه سنة 1958، يقع على مساحة 200 متر مربع، ويضم مركبة واحدة فقط إطفاء وإنقاذ، بالإضافة إلى 18 موظف",
-          images: ["sooq-albireh.jpeg"],
-        
-        },
-        {
-          name: "مركز بيرزيت",
-          coordinates: [31.969, 35.201],
-          description: "مركز يقع في مدينة بيرزيت، تم انشاءه سنة 1978، يقع على مساحة 80 متر مربع، ويضم مركبة واحدة فقط إطفاء وإنقاذ، بالإضافة إلى 14 موظف",
-          images: ["sooq-birzeit.jpeg"],
-          
-        },
-        {
-          name: "مركز نعلين",
-          coordinates: [31.946, 35.021],
-          description: "مركز يقع في قرية نعلين، تم انشاءه سنة 1995، يقع على مساحة 120 متر مربع، ويضم مركبة واحدة فقط إطفاء وإنقاذ، بالإضافة إلى 13 موظف",
-          images: ["sooq-naleen.jpeg"],
-
-        },
-        {
-          name: "مركز بيت لقيا",
-          coordinates: [31.867, 35.063],
-          description: "مركز يقع في قرية بيت لقيا، تم انشاءه سنة 2010، يقع على مساحة 180 متر مربع، ويضم مركبة واحدة فقط إطفاء وإنقاذ، بالإضافة إلى 12 موظف",
-          images: ["sooq-beitliqya.jpeg"],
-
-        },
-        {
-          name: "مركز الطيبة",
-          coordinates: [31.959, 35.296],
-          description: "مركز يقع في قرية الطيبة، وهو أحدث مركز في المحافظة، حيث تم انشاءه سنة 2015، ويضم 5 مركبات إطفاء وإنقاذ، بالإضافة إلى 10 موظفين", 
-          openHours: "07:00 - 18:00",
-          images: ["sooq-taybeh.jpeg"],
-          videos: ["https://www.youtube.com/watch?v=MNO12345"]
-        },
-        {
-          name: "مركز عبوين",
-          coordinates: [32.032, 35.199],
-          description: "مركز يقع في قرية عبوين، تم انشاءه سنة 1976، يقع على مساحة 150 متر مربع، ويضم مركبة واحدة فقط إطفاء وإنقاذ، بالإضافة إلى 10 موظفين",
-          openHours: "08:00 - 19:00",
-          images: ["sooq-abwein.jpeg"],
-          videos: ["https://www.youtube.com/watch?v=PQR12345"]
-        }
-      ];
-
-      // إضافة المراكز على الخريطة
-      markets.forEach(market => {
-        var marker = L.marker(market.coordinates).addTo(map);
-        
-        // عند النقر على الماركَر، سيتم عرض التفاصيل
-        marker.bindPopup(`
-          <h3>${market.name}</h3>
-          <p>${market.description}</p>
-          <p>ساعات العمل: ${market.openHours}</p>
-          <a href="${market.videos[0]}" target="_blank">شاهد الفيديو</a>
-        `);
-      });
+    function showFireReportForm() {
+      document.getElementById("fire-report-form").style.display = "block";
     }
 
-    function callEmergency() {
-      alert("رقم خدمة الطوارئ: 102");
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          alert("موقعك الحالي: " + position.coords.latitude + ", " + position.coords.longitude);
+        });
+      } else {
+        alert("لا تدعم هذه المتصفح ميزة الموقع.");
+      }
+    }
+
+    function showLocationInput() {
+      document.getElementById("location-input").style.display = "block";
+    }
+
+    function submitFireReport() {
+      const location = document.querySelector('input[name="location"]:checked').value;
+      if (location === 'current') {
+        alert("تم إرسال بلاغ حريق باستخدام الموقع الحالي.");
+      } else {
+        const otherLocation = document.getElementById("other-location-input").value;
+        alert("تم إرسال بلاغ حريق باستخدام الموقع: " + otherLocation);
+      }
     }
   </script>
 </body>
