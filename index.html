@@ -26,15 +26,10 @@
       color: white;
       background-color: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
-      padding: 3px;
+      padding: 20px;
       box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
       max-width: 1000px;
-      width: 50%;
-    }
-    .welcome-box {
-      padding: 10px;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.8);
+      width: 90%;
     }
     .welcome-box h1 {
       font-size: 2em;
@@ -42,31 +37,22 @@
     }
     .welcome-box p {
       font-size: 1.2em;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
-    .welcome-box button,
-    .welcome-box a.instructions-button {
-      display: inline-block;
+    .welcome-box a, .welcome-box button {
       padding: 10px 15px;
-      font-size: 1.2em;
+      font-size: 1em;
+      margin: 5px;
       color: white;
-      background: #ff4500;
+      text-decoration: none;
+      background-color: #ff4500;
       border: none;
       border-radius: 5px;
-      text-decoration: none;
       cursor: pointer;
-      transition: 0.3s;
-      margin: 5px;
+      transition: background-color 0.3s;
     }
-    .welcome-box button:hover,
-    .welcome-box a.instructions-button:hover {
-      background: #e63900;
-    }
-    .instructions-button {
-      background: #007BFF;
-    }
-    .instructions-button:hover {
-      background: #0056b3;
+    .welcome-box a:hover, .welcome-box button:hover {
+      background-color: #e63900;
     }
   </style>
 </head>
@@ -74,62 +60,15 @@
   <div class="welcome-container">
     <div class="welcome-box">
       <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في محافظة رام الله والبيرة</h1>
-      <p>ساعدنا في إنقاذ الأرواح... بلغ عن موقع الحريق الآن. كل ثانية بتفرق</p>
+      <p>ساعدنا في إنقاذ الأرواح… بلّغ عن موقع الحريق الآن. كل ثانية بتفرق</p>
 
-      <a href="indexx.html" class="instructions-button">التعرف على مراكز الدفاع المدني في المحافظة</a>
-      <button onclick="showFireReportForm()">تقديم بلاغ حريق</button>
-      <button class="instructions-button" onclick="callEmergency()">اتصل بنا</button>
+      <a href="indexx.html">التعرف على مراكز الدفاع المدني في المحافظة</a>
+      <a href="report.html">تقديم بلاغ حريق</a>
+      <button onclick="callEmergency()">اتصل بنا</button>
     </div>
-  </div>
-
-  <div id="fire-report-form" class="fire-report-form" style="display: none;">
-    <h2>تقديم بلاغ حريق</h2>
-    <label>اختر موقع الحريق:</label><br>
-    <input type="radio" name="location" value="current" onclick="getLocation()"> موقعك الحالي<br>
-    <input type="radio" name="location" value="other" onclick="showLocationInput()"> موقع آخر<br>
-
-    <div id="location-input" style="display:none;">
-      <label>أدخل الموقع:</label>
-      <input type="text" id="other-location-input" placeholder="أدخل الموقع هنا">
-    </div>
-
-    <br>
-    <button onclick="submitFireReport()">إرسال بلاغ الحريق</button>
   </div>
 
   <script>
-    function showFireReportForm() {
-      document.getElementById("fire-report-form").style.display = "block";
-    }
-
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          alert("موقعك الحالي: " + position.coords.latitude + ", " + position.coords.longitude);
-        });
-      } else {
-        alert("لا يدعم المتصفح ميزة الموقع.");
-      }
-    }
-
-    function showLocationInput() {
-      document.getElementById("location-input").style.display = "block";
-    }
-
-    function submitFireReport() {
-      const location = document.querySelector('input[name="location"]:checked')?.value;
-      if (!location) return alert("اختر الموقع أولاً.");
-
-      if (location === 'current') {
-        alert("تم إرسال بلاغ حريق باستخدام الموقع الحالي.");
-        confirm("هل أنت متأكد؟") ? alert("تم إرسال البلاغ.") : alert("تم الإلغاء.");
-      } else {
-        const otherLoc = document.getElementById("other-location-input").value;
-        if (!otherLoc.trim()) return alert("الرجاء إدخال الموقع.");
-        confirm("هل أنت متأكد؟") ? alert("تم إرسال البلاغ.") : alert("تم الإلغاء.");
-      }
-    }
-
     function callEmergency() {
       alert("رقم الطوارئ: 102");
     }
