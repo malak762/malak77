@@ -4,18 +4,11 @@
   <meta charset="utf-8" />
   <title>تقديم بلاغ حريق</title>
   <style>
-    :root {
-      --accent: #ff4500;
-      --dark: #1a1a1a;
-      --gray: #f4f4f4;
-      --blue: #007BFF;
-    }
-
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(to right, #fff, #ffece6);
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -23,16 +16,14 @@
     }
 
     .back-button {
-      align-self: flex-start;
       margin: 20px;
       padding: 10px 20px;
       font-size: 1em;
+      background-color: #007BFF;
       color: white;
-      background-color: var(--blue);
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: 0.3s;
     }
 
     .back-button:hover {
@@ -41,15 +32,113 @@
 
     .form-container {
       background-color: white;
-      padding: 40px;
-      margin-top: 30px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       width: 90%;
       max-width: 500px;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       text-align: center;
-      border-top: 10px solid var(--accent);
     }
 
     .form-container h2 {
-      color: var(--dark
+      color: #222;
+      font-size: 1.8em;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-size: 1.2em;
+      color: #333;
+      display: block;
+      margin: 15px 0 5px;
+      text-align: right;
+    }
+
+    input[type="radio"] {
+      transform: scale(1.2);
+      margin-left: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .submit-button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      font-size: 1.1em;
+      background-color: #ff4500;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .submit-button:hover {
+      background-color: #e63900;
+    }
+
+    #location-input {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-button" onclick="window.location.href='index.html'">العودة إلى الصفحة الرئيسية</button>
+
+  <div class="form-container">
+    <h2>تقديم بلاغ حريق</h2>
+
+    <label>
+      <input type="radio" name="location" value="current" onclick="getLocation()"> موقعك الحالي
+    </label>
+
+    <label>
+      <input type="radio" name="location" value="other" onclick="showLocationInput()"> موقع آخر
+    </label>
+
+    <div id="location-input">
+      <label>أدخل الموقع:</label>
+      <input type="text" id="other-location-input" placeholder="مثال: شارع القدس - رام الله">
+    </div>
+
+    <button class="submit-button" onclick="submitFireReport()">إرسال بلاغ الحريق</button>
+  </div>
+
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          alert("موقعك الحالي: " + position.coords.latitude + ", " + position.coords.longitude);
+        });
+      } else {
+        alert("المتصفح لا يدعم تحديد الموقع.");
+      }
+    }
+
+    function showLocationInput() {
+      document.getElementById("location-input").style.display = "block";
+    }
+
+    function submitFireReport() {
+      const location = document.querySelector('input[name="location"]:checked')?.value;
+      if (!location) return alert("الرجاء اختيار الموقع.");
+
+      if (location === 'current') {
+        confirm("هل أنت متأكد؟") ? alert("تم إرسال البلاغ بموقعك الحالي.") : alert("تم الإلغاء.");
+      } else {
+        const otherLoc = document.getElementById("other-location-input").value.trim();
+        if (!otherLoc) return alert("الرجاء إدخال الموقع.");
+        confirm("هل أنت متأكد؟") ? alert("تم إرسال البلاغ.") : alert("تم الإلغاء.");
+      }
+    }
+  </script>
+</body>
+</html>
