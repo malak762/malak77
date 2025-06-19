@@ -8,8 +8,8 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      /* استخدام الرابط الصحيح للصورة من GitHub */
-      background: url('https://github.com/malak762/malak77/blob/main/fire1.jpeg') no-repeat center center fixed;
+      /* استخدام المسار المحلي للصورة */
+      background: url('fire1.jpeg') no-repeat center center fixed;
       background-size: cover; /* تأكد من أن الصورة تغطي كامل الشاشة */
       display: flex;
       flex-direction: column;
