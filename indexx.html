@@ -95,13 +95,95 @@
     ];
 
     // إضافة المراكز على الخريطة
-    centers.forEach(center => {
-      var marker = L.marker(center.coordinates).addTo(map);
-      marker.bindPopup(`
-        <h3>${center.name}</h3>
-        <p>${center.description}</p>
-      `);
+    centers.forEach(async(center) => {
+      const marker = L.marker(center.coordinates, {
+        icon: L.divIcon({
+          className: market.isOpen ? 'open-market' : 'closed-market',
+          html: `<span style='background-color: ${market.isOpen ? "red" : "gray"}; padding: 6px; border-radius: 50%;'></span>`
+        })
+      });
+      const content = `
+        <div style="width: 300px;">
+          <h3>${center.name}</h3>
+          <p>${center.description}</p>   
+        </div>
+      `;
+      marker.bindPopup(content);
+      markers.addLayer(marker);
+     
+     const centerLinks = document.getElementById('center-links');
+      const centerItem = document.createElement('Ci');
+      centerItem.textContent = center.name;
+      centerItem.onclick = () => {
+        map.setView(center.coordinates, 15);
+        marker.openPopup();
+      };
+      centerLinks.appendChild(centerItem);
     });
+
+    map.addLayer(markers);
+
+    function submitSuggestion() {
+      const suggestion = document.getElementById('suggestion').value;
+      if (suggestion.trim() === '') {
+        alert('يرجى كتابة اقتراح قبل الإرسال.');
+        return;
+      }
+      alert('شكرًا على اقتراحك: ' + suggestion);
+      document.getElementById('suggestion').value = '';
+    }
+
+    function openStreetView(url) {
+      window.open(url, '_blank');
+    }
+let currentLanguage = 'ar'; // اللغة الافتراضية
+
+async function translatePage(targetLanguage) {
+  // استهدف النصوص القابلة للترجمة
+  const textElements = document.querySelectorAll('h3, p, button, .legend h4, .market-list h4, .suggestion-box h4');
+  
+  // جمع النصوص للترجمة
+  const textsToTranslate = Array.from(textElements).map(el => el.textContent);
+
+  // الاتصال بـ Google Translate API
+  const apiKey = 'YOUR_GOOGLE_TRANSLATE_API_KEY'; // ضع مفتاح API الخاص بك هنا
+  const url = 'https://translation.googleapis.com/language/translate/v2';
+  
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      q: textsToTranslate,
+      target: targetLanguage,
+      source: currentLanguage,
+      key: apiKey,
+    }),
+  });
+
+  if (!response.ok) {
+    console.error('Translation API Error:', response.statusText);
+    return;
+  }
+
+  const data = await response.json();
+  const translatedTexts = data.data.translations.map(t => t.translatedText);
+
+  // استبدل النصوص القديمة بالنصوص المترجمة
+  textElements.forEach((el, index) => {
+    el.textContent = translatedTexts[index];
+  });
+
+  // تحديث اللغة الحالية
+  currentLanguage = targetLanguage;
+}
+
+function toggleLanguage() {
+  const targetLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+  translatePage(targetLanguage);
+}
+
   </script>
 </body>
 </html>
