@@ -26,8 +26,10 @@
       color: white;
       background-color: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
-      padding: 20px;
+      padding: 10px; /* تم تصغير البوكس */
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      max-width: 500px; /* تحديد حجم البوكس */
+      width: 100%;
     }
     .welcome-box {
       padding: 20px;
@@ -35,7 +37,7 @@
       background: rgba(0, 0, 0, 0.8);
     }
     .welcome-box h1 {
-      font-size: 3em;
+      font-size: 2em;
       margin-bottom: 10px;
     }
     .welcome-box p {
@@ -51,6 +53,7 @@
       border-radius: 5px;
       cursor: pointer;
       transition: 0.3s;
+      margin: 5px;
     }
     .welcome-box button:hover {
       background: #e63900;
@@ -83,6 +86,7 @@
       
       <button onclick="window.location.href = 'mapPage.html';">التعرف على مراكز الدفاع المدني في المحافظة</button>
       <button onclick="showFireReportForm()">تقديم بلاغ حريق</button>
+      <button class="instructions-button" onclick="callEmergency()">اتصل بنا</button>
     </div>
   </div>
 
@@ -126,10 +130,28 @@
       const location = document.querySelector('input[name="location"]:checked').value;
       if (location === 'current') {
         alert("تم إرسال بلاغ حريق باستخدام الموقع الحالي.");
+        showConfirmation();
       } else {
         const otherLocation = document.getElementById("other-location-input").value;
-        alert("تم إرسال بلاغ حريق باستخدام الموقع: " + otherLocation);
+        if (!otherLocation) {
+          alert("الرجاء إدخال الموقع.");
+        } else {
+          showConfirmation();
+        }
       }
+    }
+
+    function showConfirmation() {
+      const confirmation = confirm("هل أنت متأكد؟ سيتم حسابك في حال كانت المعلومات غير صحيحة.");
+      if (confirmation) {
+        alert("تم إرسال البلاغ.");
+      } else {
+        alert("الرجاء التأكد من المعلومات أولاً.");
+      }
+    }
+
+    function callEmergency() {
+      alert("رقم خدمة الطوارئ: 102");
     }
   </script>
 </body>
