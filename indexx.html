@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <title>مراكز الدفاع المدني في محافظة رام الله والبيرة</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #map {
+      height: 80vh;
+      width: 100%;
+    }
+    .back-button {
+      padding: 10px 20px;
+      font-size: 1em;
+      color: white;
+      background: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .back-button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="window.location.href = 'index.html';">العودة إلى الصفحة الرئيسية</button>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([31.7767, 35.2332], 8);  // إحداثيات وسط فلسطين
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // مراكز الدفاع المدني
+    const centers = [
+      {
+        name: "مركز رام الله",
+        coordinates: [31.893, 35.187],
+        description: "مركز يقع في مدينة رام الله."
+      },
+      {
+        name: "مركز البيرة",
+        coordinates: [31.928, 35.218],
+        description: "مركز يقع في مدينة البيرة."
+      },
+      // إضافة باقي المراكز هنا...
+    ];
+
+    centers.forEach(center => {
+      var marker = L.marker(center.coordinates).addTo(map);
+      marker.bindPopup(`
+        <h3>${center.name}</h3>
+        <p>${center.description}</p>
+      `);
+    });
+  </script>
+</body>
+</html>
