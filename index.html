@@ -6,7 +6,6 @@
   <title>مراكز الدفاع المدني</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    /* خلفية مع الصورة */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -15,63 +14,45 @@
       color: white;
     }
 
-    /* رأس الصفحة مع الشعار */
     header {
-      background-color: #fff;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 10px 20px;
+      background-color: rgba(0,0,0,0.9);
+      padding: 10px;
+      font-size: 1.6em;
+      font-weight: bold;
+      text-align: center;
       border-bottom: 3px solid #ff4500;
     }
 
-    header img {
-      max-height: 120px;
+    .header-logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      background-color: white;
+      color: black;
+      margin: 0 10px;
+      border-radius: 5px;
     }
 
-    /* الشريط المتحرك تحت الشعار */
-    .marquee {
-      background-color: #ff4500;
-      color: white;
-      padding: 10px;
-      font-size: 1.2em;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    .marquee span {
-      display: inline-block;
-      animation: marquee 30s linear infinite;
-    }
-
-    @keyframes marquee {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    /* شريط التنقل مع الأزرار */
     nav {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between; /* ترتيب الأزرار */
-      background-color: white;
-      padding: 15px;
+      justify-content: space-between;
       gap: 10px;
-      position: relative;
-      top: -10px; /* رفع الأزرار للأعلى */
+      background-color: rgba(0,0,0,0.85);
+      padding: 15px;
     }
 
     nav a, nav button {
       border: none;
       color: black;
-      padding: 10px 14px;
+      padding: 10px 16px;
       text-decoration: none;
       border-radius: 6px;
-      font-size: 0.9em; /* تقليص حجم الأزرار */
+      font-size: 1em;
       cursor: pointer;
       transition: 0.3s;
-      background: linear-gradient(45deg, #ff4500, #ff9800);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      background-color: #ffc107;
     }
 
     nav a.highlight {
@@ -83,10 +64,8 @@
     nav a:hover, nav button:hover {
       background-color: #ff9800;
       color: white;
-      transform: scale(1.05);
     }
 
-    /* النوافذ المنبثقة */
     .popup {
       display: none;
       position: fixed;
@@ -128,73 +107,59 @@
       white-space: pre-line;
     }
 
-    /* تعديل حجم البوكس تحت الأزرار */
-    .box {
-      width: 75%;
-      margin: 10px auto;
-      background-color: rgba(0,0,0,0.7);
-      padding: 20px;
-      border-radius: 6px;
-      text-align: center;
-    }
-
-    /* تحسين الخطوط */
-    body {
-      font-family: 'Roboto', sans-serif;
-    }
-
-    /* ترتيب الأزرار في أسفل الصفحة */
-    .footer-buttons {
-      display: flex;
-      justify-content: space-between;
-      padding: 20px 10px;
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      z-index: 999;
-    }
-
-    .footer-buttons button {
-      width: 48%;
-    }
-
-    /* عند الحجم الصغير للشاشة */
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
         align-items: center;
       }
-      .footer-buttons {
-        flex-direction: column;
-      }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .content-container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* تعديل حجم البوكس الأبيض أسفل الشعار */
+    .header-logo {
+      max-width: 80%;
+    }
+
+    /* إزالة شريط التحميل */
+    .header-logo img {
+      max-height: 60px;
     }
   </style>
 </head>
 <body>
-
-  <!-- رأس الصفحة مع الشعار -->
-  <header>
-    <img src="center_logo.png" alt="BZU Logo">
-  </header>
-
-  <!-- شريط متحرك تحت الشعار -->
-  <div class="marquee">
-    <span>مرحبًا بك في موقع الدفاع المدني! نحن هنا لخدمتك في محافظة رام الله والبيرة. تابعنا لتقديم البلاغات ومساعدتك في أي وقت.</span>
+  <!-- الشعار -->
+  <div class="header-logo">
+    <img src="center_logo.png" alt="Logo" />
+    <h1>مراكز الدفاع المدني الفلسطيني</h1>
   </div>
 
-  <!-- شريط التنقل مع الأزرار -->
-  <nav>
-    <a href="indexx.html">🏠 الرئيسية</a>
-    <a href="indexx.html">📍 مراكز المحافظة</a>
-    <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
-    <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
-    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
-    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
-    <button onclick="showAbout()">ℹ️ عن التطبيق</button>
-    <button onclick="showTeam()">👩‍🎓 من نحن</button>
-  </nav>
+  <div class="content-container">
+    <!-- شريط التنقل -->
+    <nav>
+      <a href="index.html">🏠 الرئيسية</a>
+      <a href="indexx.html">📍 مراكز المحافظة</a>
+      <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
+      <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
+      <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
+      <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
+      <button onclick="showAbout()">ℹ️ عن التطبيق</button>
+      <button onclick="showTeam()">👩‍🎓 من نحن</button>
+    </nav>
+  </div>
 
-  <!-- الشكاوي -->
+  <!-- شكاوى -->
   <div id="complaint" class="popup">
     <h3>💬 أرسل شكواك</h3>
     <textarea id="complaintText" placeholder="اكتب شكواك هنا..."></textarea>
@@ -202,7 +167,7 @@
     <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
   </div>
 
-  <!-- الاقتراحات -->
+  <!-- اقتراحات -->
   <div id="suggestion" class="popup">
     <h3>💡 أرسل اقتراحك</h3>
     <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
@@ -214,10 +179,10 @@
   <div id="team" class="popup">
     <h3>👩‍🎓 من نحن</h3>
     <p>
-      ملاك حمدان<br>
-      إسراء فواقا<br>
-      تخصص جيوانفورماتكس<br>
-      جامعة بيرزيت<br>
+      ملاك حمدان<br />
+      إسراء فواقا<br />
+      تخصص جيوانفورماتكس<br />
+      جامعة بيرزيت<br />
       0597661969
     </p>
     <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
@@ -265,12 +230,5 @@
       openPopup('team');
     }
   </script>
-
-  <!-- الأزرار في أسفل الصفحة -->
-  <div class="footer-buttons">
-    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
-    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
-  </div>
-
 </body>
 </html>
