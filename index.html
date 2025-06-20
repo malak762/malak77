@@ -188,27 +188,9 @@
     <a href="indexx.html">📍 مراكز المحافظة</a>
     <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
     <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
-    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
-    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
     <button onclick="showAbout()">ℹ️ عن التطبيق</button>
     <button onclick="showTeam()">👩‍🎓 من نحن</button>
   </nav>
-
-  <!-- الشكاوي -->
-  <div id="complaint" class="popup">
-    <h3>💬 أرسل شكواك</h3>
-    <textarea id="complaintText" placeholder="اكتب شكواك هنا..."></textarea>
-    <button onclick="sendMessage('شكوى', document.getElementById('complaintText').value)">إرسال</button>
-    <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
-  </div>
-
-  <!-- الاقتراحات -->
-  <div id="suggestion" class="popup">
-    <h3>💡 أرسل اقتراحك</h3>
-    <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
-    <button onclick="sendMessage('اقتراح', document.getElementById('suggestionText').value)">إرسال</button>
-    <button class="popup-close" onclick="closePopup('suggestion')">إغلاق</button>
-  </div>
 
   <!-- من نحن -->
   <div id="team" class="popup">
