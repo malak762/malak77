@@ -6,7 +6,7 @@
   <title>مراكز الدفاع المدني</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    /* خلفية متدرجة مع الصورة الأصلية */
+    /* خلفية مع الصورة */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -15,13 +15,13 @@
       color: white;
     }
 
-    /* الرأس مع الشعار في اليمين */
+    /* رأس الصفحة مع الشعار */
     header {
       background-color: #fff;
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      padding: 30px 20px;
+      padding: 10px 20px;
       border-bottom: 3px solid #ff4500;
     }
 
@@ -29,7 +29,7 @@
       max-height: 120px;
     }
 
-    /* شريط متحرك تحت الشعار */
+    /* الشريط المتحرك تحت الشعار */
     .marquee {
       background-color: #ff4500;
       color: white;
@@ -41,35 +41,37 @@
 
     .marquee span {
       display: inline-block;
-      animation: marquee 15s linear infinite;
+      animation: marquee 30s linear infinite;
     }
 
     @keyframes marquee {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
 
     /* شريط التنقل مع الأزرار */
     nav {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      justify-content: space-between; /* ترتيب الأزرار */
       background-color: white;
       padding: 15px;
+      gap: 10px;
+      position: relative;
+      top: -10px; /* رفع الأزرار للأعلى */
     }
 
     nav a, nav button {
       border: none;
       color: black;
-      padding: 12px 16px;
+      padding: 10px 14px;
       text-decoration: none;
       border-radius: 6px;
-      font-size: 1em;
+      font-size: 0.9em; /* تقليص حجم الأزرار */
       cursor: pointer;
       transition: 0.3s;
-      background: linear-gradient(45deg, #ff4500, #ff9800); /* تدرج لوني للأزرار */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة الظلال */
+      background: linear-gradient(45deg, #ff4500, #ff9800);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     nav a.highlight {
@@ -126,9 +128,34 @@
       white-space: pre-line;
     }
 
+    /* تعديل حجم البوكس تحت الأزرار */
+    .box {
+      width: 75%;
+      margin: 10px auto;
+      background-color: rgba(0,0,0,0.7);
+      padding: 20px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
     /* تحسين الخطوط */
     body {
       font-family: 'Roboto', sans-serif;
+    }
+
+    /* ترتيب الأزرار في أسفل الصفحة */
+    .footer-buttons {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 10px;
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      z-index: 999;
+    }
+
+    .footer-buttons button {
+      width: 48%;
     }
 
     /* عند الحجم الصغير للشاشة */
@@ -137,12 +164,15 @@
         flex-direction: column;
         align-items: center;
       }
+      .footer-buttons {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- رأس الصفحة مع الشعار الكبير على اليمين -->
+  <!-- رأس الصفحة مع الشعار -->
   <header>
     <img src="center_logo.png" alt="BZU Logo">
   </header>
@@ -154,6 +184,7 @@
 
   <!-- شريط التنقل مع الأزرار -->
   <nav>
+    <a href="indexx.html">🏠 الرئيسية</a>
     <a href="indexx.html">📍 مراكز المحافظة</a>
     <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
     <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
@@ -183,11 +214,11 @@
   <div id="team" class="popup">
     <h3>👩‍🎓 من نحن</h3>
     <p>
-ملاك حمدان  
-إسراء فواقا  
-تخصص جيوانفورماتكس  
-جامعة بيرزيت  
-0597661969
+      ملاك حمدان<br>
+      إسراء فواقا<br>
+      تخصص جيوانفورماتكس<br>
+      جامعة بيرزيت<br>
+      0597661969
     </p>
     <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
   </div>
@@ -234,6 +265,12 @@
       openPopup('team');
     }
   </script>
+
+  <!-- الأزرار في أسفل الصفحة -->
+  <div class="footer-buttons">
+    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
+    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
+  </div>
 
 </body>
 </html>
