@@ -17,17 +17,21 @@
     header {
       background-color: rgba(0, 0, 0, 0.9);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 20px 30px;
-      font-size: 1.6em;
-      font-weight: bold;
+      justify-content: space-between;
+      padding: 15px 25px;
       border-bottom: 3px solid #ff4500;
     }
 
-    header img {
+    .logo {
       height: 50px;
-      margin-right: 0;
+    }
+
+    .title {
+      flex: 1;
+      text-align: center;
+      font-size: 1.6em;
+      font-weight: bold;
     }
 
     nav {
@@ -104,26 +108,26 @@
     }
 
     @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
       header {
         flex-direction: column;
         gap: 10px;
         text-align: center;
+      }
+      .title {
+        order: -1;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- رأس الصفحة مع الشعار يمين العنوان -->
+  <!-- رأس الصفحة -->
   <header>
-    <div>مراكز الدفاع المدني الفلسطيني</div>
-    <img src="https://www.dci.plo.ps/files/image/plo_pic/BZU_Logo.png" alt="BZU Logo">
+    <img src="https://images.app.goo.gl/EtNg6XeewS6QXGRC7" alt="BZU Logo" class="logo">
+    <div class="title">مراكز الدفاع المدني الفلسطيني في محافظة رام الله والبيرة</div>
   </header>
 
+  <!-- شريط التنقل -->
   <nav>
     <a href="indexx.html">📍 مراكز المحافظة</a>
     <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
@@ -134,7 +138,7 @@
     <button onclick="showTeam()">👩‍🎓 من نحن</button>
   </nav>
 
-  <!-- الشكاوي -->
+  <!-- النوافذ المنبثقة -->
   <div id="complaint" class="popup">
     <h3>💬 أرسل شكواك</h3>
     <textarea id="complaintText" placeholder="اكتب شكواك هنا..."></textarea>
@@ -142,7 +146,6 @@
     <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
   </div>
 
-  <!-- الاقتراحات -->
   <div id="suggestion" class="popup">
     <h3>💡 أرسل اقتراحك</h3>
     <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
@@ -150,7 +153,6 @@
     <button class="popup-close" onclick="closePopup('suggestion')">إغلاق</button>
   </div>
 
-  <!-- من نحن -->
   <div id="team" class="popup">
     <h3>👩‍🎓 من نحن</h3>
     <p>
@@ -163,6 +165,7 @@
     <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
   </div>
 
+  <!-- سكريبت -->
   <script>
     emailjs.init("k_-XPBpAVOGXECMjt");
 
