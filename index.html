@@ -44,6 +44,7 @@
       border-radius: 5px;
       border: 1px solid #ccc;
       font-size: 12px;
+      cursor: pointer;
     }
     .legend h4 {
       margin-bottom: 10px;
@@ -92,12 +93,24 @@
 
     map.addLayer(markers);
 
-    // إضافة مفتاح الخريطة
-    const legend = L.control({ position: 'bottomright' });
+    // إضافة مفتاح الخريطة في أعلى اليمين
+    const legend = L.control({ position: 'topright' });
 
     legend.onAdd = function() {
       const div = L.DomUtil.create('div', 'legend');
-      div.innerHTML = '<h4>مراكز الدفاع المدني</h4><p>الموقع الحالي للمراكز</p>';
+      div.innerHTML = '<h4>مراكز الدفاع المدني</h4><p>اضغط على أي مركز لعرض التفاصيل</p>';
+      div.onclick = function() {
+        // عند الضغط على المفتاح، تعرض نافذة منبثقة تحتوي على جميع المراكز
+        let centersList = '<h4>قائمة المراكز:</h4><ul>';
+        centers.forEach(center => {
+          centersList += `<li><b>${center.name}</b>: ${center.description}</li>`;
+        });
+        centersList += '</ul>';
+        L.popup()
+          .setLatLng(map.getCenter()) // عرض النافذة في وسط الخريطة
+          .setContent(centersList)
+          .openOn(map);
+      };
       return div;
     };
 
