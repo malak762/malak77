@@ -78,7 +78,7 @@
   </div>
 
   <script>
-    emailjs.init("k_-XPBpAVOGXECMjt"); // ✅ Public Key
+    emailjs.init("k_-XPBpAVOGXECMjt"); // Public Key
 
     function getLocation() {
       if (navigator.geolocation) {
@@ -120,7 +120,8 @@
       } else {
         const locationInput = document.getElementById("other-location-input").value.trim();
         if (!locationInput) return alert("الرجاء إدخال الموقع يدويًا.");
-        sendEmail({ type, location: locationInput, coords: '—', maplink: '—', time, phone });
+        const maplink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationInput)}`;
+        sendEmail({ type, location: locationInput, coords: '—', maplink, time, phone });
       }
     }
 
