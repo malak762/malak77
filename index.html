@@ -6,7 +6,7 @@
   <title>مراكز الدفاع المدني</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    /* خلفية متدرجة مع الصورة الأصلية */
+    /* خلفية مع الصورة */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -15,7 +15,7 @@
       color: white;
     }
 
-    /* الرأس مع الشعار في اليمين */
+    /* رأس الصفحة مع الشعار على اليمين */
     header {
       background-color: #fff;
       display: flex;
@@ -29,7 +29,7 @@
       max-height: 120px;
     }
 
-    /* شريط متحرك تحت الشعار */
+    /* الشريط المتحرك تحت الشعار */
     .marquee {
       background-color: #ff4500;
       color: white;
@@ -41,22 +41,22 @@
 
     .marquee span {
       display: inline-block;
-      animation: marquee 30s linear infinite; /* زيادة الوقت إلى 30 ثانية */
+      animation: marquee 30s linear infinite; /* السرعة تم تعديلها */
     }
 
     @keyframes marquee {
-      0% { transform: translateX(-100%); } /* بداية الحركة من اليسار */
-      100% { transform: translateX(100%); } /* نهاية الحركة إلى اليمين */
+      0% { transform: translateX(-100%); } /* من اليسار */
+      100% { transform: translateX(100%); } /* إلى اليمين */
     }
 
     /* شريط التنقل مع الأزرار */
     nav {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      justify-content: space-between; /* ترتيب الأزرار */
       background-color: white;
       padding: 15px;
+      gap: 10px;
     }
 
     nav a, nav button {
@@ -68,8 +68,8 @@
       font-size: 1em;
       cursor: pointer;
       transition: 0.3s;
-      background: linear-gradient(45deg, #ff4500, #ff9800); /* تدرج لوني للأزرار */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة الظلال */
+      background: linear-gradient(45deg, #ff4500, #ff9800);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     nav a.highlight {
@@ -81,7 +81,7 @@
     nav a:hover, nav button:hover {
       background-color: #ff9800;
       color: white;
-      transform: scale(1.05); /* تكبير الأزرار عند التمرير */
+      transform: scale(1.05);
     }
 
     /* النوافذ المنبثقة */
@@ -126,6 +126,16 @@
       white-space: pre-line;
     }
 
+    /* تعديل حجم البوكس تحت الأزرار */
+    .box {
+      width: 80%;
+      margin: 10px auto;
+      background-color: rgba(0,0,0,0.7);
+      padding: 20px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
     /* تحسين الخطوط */
     body {
       font-family: 'Roboto', sans-serif;
@@ -142,7 +152,7 @@
 </head>
 <body>
 
-  <!-- رأس الصفحة مع الشعار الكبير على اليمين -->
+  <!-- رأس الصفحة مع الشعار -->
   <header>
     <img src="center_logo.png" alt="BZU Logo">
   </header>
@@ -154,6 +164,7 @@
 
   <!-- شريط التنقل مع الأزرار -->
   <nav>
+    <a href="indexx.html">🏠 الرئيسية</a>
     <a href="indexx.html">📍 مراكز المحافظة</a>
     <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
     <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
@@ -183,11 +194,11 @@
   <div id="team" class="popup">
     <h3>👩‍🎓 من نحن</h3>
     <p>
-ملاك حمدان  
-إسراء فواقا  
-تخصص جيوانفورماتكس  
-جامعة بيرزيت  
-0597661969
+      ملاك حمدان<br>
+      إسراء فواقا<br>
+      تخصص جيوانفورماتكس<br>
+      جامعة بيرزيت<br>
+      0597661969
     </p>
     <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
   </div>
