@@ -34,40 +34,10 @@
     .back-button:hover {
       background: #0056b3;
     }
-    /* نافذة منبثقة في الزاوية العلوية اليمنى */
-    .popup-window {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      max-height: 80vh;
-      overflow-y: auto;
-    }
-    .popup-window h4 {
-      margin-top: 0;
-    }
-    .popup-window ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    .popup-window li {
-      padding: 8px 0;
-      cursor: pointer;
-      color: #007BFF;
-    }
-    .popup-window li:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
-  <!-- الفصحة الترحيبية -->
   <button class="back-button" onclick="window.location.href = 'index.html';">العودة إلى الصفحة الرئيسية</button>
-
   <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
@@ -98,24 +68,6 @@
     });
 
     map.addLayer(markers);
-
-    // إنشاء نافذة منبثقة في أعلى يمين الصفحة
-    const popupWindow = document.createElement('div');
-    popupWindow.className = 'popup-window';
-    popupWindow.innerHTML = `
-      <h4>مراكز الدفاع المدني في محافظة رام الله والبيرة</h4>
-      <ul>
-        ${centers.map(center => 
-          `<li onclick="moveToCenter(${center.coordinates[0]}, ${center.coordinates[1]})">${center.name}</li>`
-        ).join('')}
-      </ul>
-    `;
-    document.body.appendChild(popupWindow);
-
-    // دالة تحريك الخريطة إلى المركز المحدد
-    function moveToCenter(lat, lng) {
-      map.setView([lat, lng], 14);
-    }
   </script>
 </body>
 </html>
