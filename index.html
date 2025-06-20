@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مراكز الدفاع المدني الفلسطيني في محافظة رام الله والبيرة</title>
+  <title>مراكز الدفاع المدني</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
     body {
@@ -14,6 +14,31 @@
       color: white;
     }
 
+    /* الشعار */
+    .bzu-header {
+      background-color: #ffca33;
+      color: black;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 2000;
+    }
+
+    .bzu-header img {
+      max-height: 40px;
+      margin-right: 20px;
+    }
+
+    .bzu-header h1 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    /* الهيدر الرئيسي */
     header {
       background-color: rgba(0,0,0,0.9);
       padding: 20px;
@@ -21,6 +46,7 @@
       font-weight: bold;
       text-align: center;
       border-bottom: 3px solid #ff4500;
+      margin-top: 70px;
     }
 
     nav {
@@ -41,11 +67,11 @@
       font-size: 1em;
       cursor: pointer;
       transition: 0.3s;
-      background-color: #ffc107; /* أصفر للباقي */
+      background-color: #ffc107;
     }
 
     nav a.highlight {
-      background-color: #d32f2f !important; /* أحمر للبلاغ */
+      background-color: #d32f2f !important;
       color: white;
       font-weight: bold;
     }
@@ -105,7 +131,15 @@
   </style>
 </head>
 <body>
-  <header>مراكز الدفاع المدني الفلسطيني في محافظة رام الله والبيرة</header>
+
+  <!-- شعار جامعة بيرزيت -->
+  <div class="bzu-header">
+    <h1>Ramallah Waste Containers</h1>
+    <img src="https://www.dci.plo.ps/files/image/plo_pic/BZU_Logo.png" alt="BZU Logo">
+  </div>
+
+  <!-- العنوان الرئيسي -->
+  <header>مراكز الدفاع المدني الفلسطيني</header>
 
   <nav>
     <a href="indexx.html">📍 مراكز المحافظة</a>
@@ -117,7 +151,7 @@
     <button onclick="showTeam()">👩‍🎓 من نحن</button>
   </nav>
 
-  <!-- شكاوى -->
+  <!-- الشكاوي -->
   <div id="complaint" class="popup">
     <h3>💬 أرسل شكواك</h3>
     <textarea id="complaintText" placeholder="اكتب شكواك هنا..."></textarea>
@@ -125,7 +159,7 @@
     <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
   </div>
 
-  <!-- اقتراحات -->
+  <!-- الاقتراحات -->
   <div id="suggestion" class="popup">
     <h3>💡 أرسل اقتراحك</h3>
     <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
@@ -188,5 +222,6 @@
       openPopup('team');
     }
   </script>
+
 </body>
 </html>
