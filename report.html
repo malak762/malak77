@@ -46,6 +46,7 @@
       margin-top: 10px;
       border: none;
       border-radius: 5px;
+      direction: ltr;
     }
     .back-button {
       margin-bottom: 20px;
@@ -70,14 +71,14 @@
 
     <div>
       <label>رقم الهاتف للتواصل:</label><br>
-      <input type="text" id="phone-number" placeholder="05XXXXXXXXX">
+      <input type="text" id="phone-number" placeholder="059-XXXXXXX">
     </div>
 
     <button onclick="submitFireReport()">إرسال بلاغ الحريق</button>
   </div>
 
   <script>
-    emailjs.init("k_-XPBpAVOGXECMjt"); // Public Key
+    emailjs.init("k_-XPBpAVOGXECMjt"); // ✅ Public Key
 
     function getLocation() {
       if (navigator.geolocation) {
@@ -98,7 +99,10 @@
       const phone = document.getElementById("phone-number").value.trim();
 
       if (!selected) return alert("الرجاء اختيار الموقع.");
-      if (!phone) return alert("الرجاء إدخال رقم الهاتف.");
+      if (!/^05\d-\d{7}$/.test(phone)) {
+        alert("الرجاء إدخال رقم صحيح بالتنسيق 05X-XXXXXXX.");
+        return;
+      }
 
       const type = selected.value === 'current' ? 'موقعك الحالي' : 'موقع يدوي';
       const time = new Date().toLocaleString();
@@ -109,28 +113,14 @@
           const lng = position.coords.longitude;
           const coords = `${lat}, ${lng}`;
           const maplink = `https://maps.google.com/?q=${lat},${lng}`;
-          sendEmail({
-            type,
-            location: '—',
-            coords,
-            maplink,
-            time,
-            phone
-          });
+          sendEmail({ type, location: '—', coords, maplink, time, phone });
         }, function() {
           alert("تعذر تحديد الموقع.");
         });
       } else {
         const locationInput = document.getElementById("other-location-input").value.trim();
         if (!locationInput) return alert("الرجاء إدخال الموقع يدويًا.");
-        sendEmail({
-          type,
-          location: locationInput,
-          coords: '—',
-          maplink: '—',
-          time,
-          phone
-        });
+        sendEmail({ type, location: locationInput, coords: '—', maplink: '—', time, phone });
       }
     }
 
@@ -143,6 +133,15 @@
           console.error(error);
         });
     }
+
+    // تنسيق رقم الهاتف تلقائيًا
+    document.getElementById("phone-number").addEventListener("input", function(e) {
+      let input = e.target.value.replace(/\D/g, ''); // إزالة أي حرف غير رقم
+      if (input.length > 3) {
+        input = input.slice(0, 3) + '-' + input.slice(3);
+      }
+      e.target.value = input.slice(0, 11); // 3 + 1 + 7
+    });
   </script>
 </body>
 </html>
