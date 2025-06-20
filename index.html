@@ -14,30 +14,30 @@
       color: white;
     }
 
-    /* تعديل الشعار */
     header {
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(0, 0, 0, 0.9);
       padding: 10px;
       display: flex;
-      justify-content: flex-end; /* جعل الشعار في الجهة اليمنى */
+      justify-content: space-between; /* توزيع الشعار والأزرار */
       align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
     }
 
     header img {
-      max-width: 200px; /* حجم الشعار */
+      max-width: 120px; /* حجم الشعار */
       height: auto;
-      margin-bottom: 10px;
       border-radius: 10px;
+      margin-left: 10px;
+      margin-top: 10px;
     }
 
-    /* تعديل الأزرار */
     nav {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      justify-content: flex-end; /* وضع الأزرار على اليمين */
       gap: 10px;
-      background-color: rgba(0, 0, 0, 0.85);
-      padding: 15px;
     }
 
     nav a, nav button {
@@ -61,6 +61,11 @@
     nav a:hover, nav button:hover {
       background-color: #ff9800;
       color: white;
+    }
+
+    .content-container {
+      padding: 80px 20px 20px; /* إضافة هامش أعلى ليظهر الشعار والأزرار بشكل صحيح */
+      text-align: center;
     }
 
     .popup {
@@ -111,38 +116,37 @@
       }
     }
 
-    .button-container {
+    /* تعديل صندوق الشكاوى والاقتراحات */
+    .popup-bottom {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      position: fixed;
+      bottom: 20px;
       width: 100%;
-    }
-
-    .content-container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
+      padding: 0 10px;
     }
   </style>
 </head>
 <body>
-  <!-- الشعار مع البوكس الأبيض -->
   <header>
     <img src="center_logo.png" alt="Logo" />
-  </header>
-
-  <div class="content-container">
-    <!-- شريط التنقل -->
     <nav>
       <a href="index.html">🏠 الرئيسية</a>
       <a href="indexx.html">📍 مراكز المحافظة</a>
       <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
       <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
-      <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
-      <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
-      <button onclick="showAbout()">ℹ️ عن التطبيق</button>
-      <button onclick="showTeam()">👩‍🎓 من نحن</button>
     </nav>
+  </header>
+
+  <div class="content-container">
+    <p>مرحبًا بك في موقع الدفاع المدني الفلسطيني</p>
+    <p>نحن هنا لخدمتك في محافظة رام الله والبيرة، تابعنا لتقديم البلاغات والمساعدة في أي وقت.</p>
+  </div>
+
+  <!-- شكاوى و اقتراحات -->
+  <div class="popup-bottom">
+    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
+    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
   </div>
 
   <!-- شكاوى -->
