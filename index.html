@@ -6,16 +6,16 @@
   <title>مراكز الدفاع المدني</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    /* خلفية متدرجة */
+    /* خلفية متدرجة مع الصورة الأصلية */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #ff4500, #ff9800);
+      background: url('fire1.jpeg') no-repeat center center fixed;
       background-size: cover;
       color: white;
     }
 
-    /* رأس الصفحة مع الشعار في اليمين */
+    /* الرأس مع الشعار في اليمين */
     header {
       background-color: #fff;
       display: flex;
@@ -29,18 +29,33 @@
       max-height: 120px;
     }
 
-    /* إزالة العنوان */
-    .title {
-      display: none;
+    /* شريط متحرك تحت الشعار */
+    .marquee {
+      background-color: #ff4500;
+      color: white;
+      padding: 10px;
+      font-size: 1.2em;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
-    /* شريط التنقل مع الخيارات */
+    .marquee span {
+      display: inline-block;
+      animation: marquee 15s linear infinite;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* شريط التنقل مع الأزرار */
     nav {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      background-color: white; /* جعل الشريط أبيض */
+      background-color: white;
       padding: 15px;
     }
 
@@ -53,20 +68,20 @@
       font-size: 1em;
       cursor: pointer;
       transition: 0.3s;
-      background-color: #ff9800; /* أصفر */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(45deg, #ff4500, #ff9800); /* تدرج لوني للأزرار */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة الظلال */
     }
 
     nav a.highlight {
-      background-color: #d32f2f !important; /* أحمر للبلاغ */
+      background-color: #d32f2f !important;
       color: white;
       font-weight: bold;
     }
 
     nav a:hover, nav button:hover {
-      background-color: #ff4500;
+      background-color: #ff9800;
       color: white;
-      transform: scale(1.05); /* تكبير الأزرار عند التمرير */
+      transform: scale(1.05);
     }
 
     /* النوافذ المنبثقة */
@@ -111,6 +126,12 @@
       white-space: pre-line;
     }
 
+    /* تحسين الخطوط */
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* عند الحجم الصغير للشاشة */
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
@@ -126,7 +147,12 @@
     <img src="center_logo.png" alt="BZU Logo">
   </header>
 
-  <!-- شريط التنقل مع الخيارات -->
+  <!-- شريط متحرك تحت الشعار -->
+  <div class="marquee">
+    <span>مرحبًا بك في موقع الدفاع المدني! نحن هنا لخدمتك في محافظة رام الله والبيرة. تابعنا لتقديم البلاغات ومساعدتك في أي وقت.</span>
+  </div>
+
+  <!-- شريط التنقل مع الأزرار -->
   <nav>
     <a href="indexx.html">📍 مراكز المحافظة</a>
     <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
