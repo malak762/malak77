@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تقديم بلاغ حريق</title>
+  <title>بلاغ وقوع حادث</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
     body {
@@ -58,9 +58,9 @@
   <button class="back-button" onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
 
   <div class="form-container">
-    <h2>تقديم بلاغ حريق</h2>
+    <h2>بلاغ وقوع حادث</h2>
 
-    <label>اختر موقع الحريق:</label><br>
+    <label>اختر موقع الحادث:</label><br>
     <input type="radio" name="location" value="current" onclick="getLocation()"> موقعك الحالي<br>
     <input type="radio" name="location" value="other" onclick="showLocationInput()"> موقع آخر<br>
 
@@ -74,7 +74,7 @@
       <input type="text" id="phone-number" placeholder="059-XXXXXXX">
     </div>
 
-    <button onclick="submitFireReport()">إرسال بلاغ الحريق</button>
+    <button onclick="submitFireReport()">إرسال البلاغ</button>
   </div>
 
   <script>
