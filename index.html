@@ -3,113 +3,163 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الدفاع المدني الفلسطيني</title>
+  <title>مراكز الدفاع المدني</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background: url('fire1.jpeg') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
       color: white;
     }
 
     header {
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.85);
-      text-align: center;
-      padding: 15px 10px;
-      font-size: 1.4em;
+      background-color: rgba(0,0,0,0.9);
+      padding: 20px;
+      font-size: 1.6em;
       font-weight: bold;
-      border-bottom: 2px solid #ff4500;
-      box-shadow: 0 2px 6px rgba(255,255,255,0.1);
-    }
-
-    .welcome-container {
-      width: 90%;
-      max-width: 700px;
-      background-color: rgba(0,0,0,0.75);
-      padding: 30px 25px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
       text-align: center;
-      margin-top: 40px;
+      border-bottom: 3px solid #ff4500;
     }
 
-    .welcome-container p {
-      font-size: 1.2em;
-      margin-bottom: 25px;
-      line-height: 1.6;
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      background-color: rgba(0,0,0,0.85);
+      padding: 15px;
     }
 
-    .welcome-container a,
-    .welcome-container button {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 6px;
-      text-decoration: none;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .welcome-container a {
+    nav a, nav button {
       background-color: #ff5722;
+      border: none;
+      color: white;
+      padding: 10px 16px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    .welcome-container a:hover {
+    nav .highlight {
+      background-color: #ffc107;
+      color: black;
+      font-weight: bold;
+    }
+
+    nav a:hover, nav button:hover {
       background-color: #e64a19;
     }
 
-    .welcome-container button {
-      background-color: #d32f2f;
+    .popup {
+      display: none;
+      position: fixed;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -25%);
+      background: rgba(0,0,0,0.95);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 90%;
+      width: 400px;
+      box-shadow: 0 0 10px #fff;
+      z-index: 999;
     }
 
-    .welcome-container button:hover {
-      background-color: #b71c1c;
+    .popup textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: none;
+      resize: none;
     }
 
-    @media screen and (max-width: 500px) {
-      header {
-        font-size: 1.1em;
-        padding: 12px 5px;
-      }
+    .popup button {
+      background-color: #28a745;
+    }
 
-      .welcome-container {
-        padding: 20px 15px;
-        margin-top: 30px;
+    .popup-close {
+      margin-top: 10px;
+      background: #b71c1c;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني الفلسطيني في محافظة رام الله والبيرة
-  </header>
+  <header>مراكز الدفاع المدني الفلسطيني</header>
 
-  <div class="welcome-container">
-    <p>
-      ساعدنا في إنقاذ الأرواح… بلّغ عن موقع الحريق الآن. <br>
-      كل ثانية بتفرق. <br>
-      وإذا حابب تعرف أكثر عنّا، اضغط لاستكشاف مواقع المراكز.
-    </p>
+  <nav>
+    <a href="indexx.html">🔥 المراكز</a>
+    <a href="report.html" class="highlight">📝 تقديم بلاغ</a>
+    <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
+    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
+    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
+    <button onclick="showAbout()">👤 من نحن</button>
+  </nav>
 
-    <a href="indexx.html">🗺️ التعرف على مراكز الدفاع المدني في المحافظة</a>
-    <a href="report.html">📝 تقديم بلاغ وقوع حادث</a>
-    <button onclick="callEmergency()">📞 اتصل بنا</button>
+  <!-- شكاوى -->
+  <div id="complaint" class="popup">
+    <h3>💬 أرسل شكواك</h3>
+    <textarea id="complaintText" placeholder="اكتب شكواك هنا..."></textarea>
+    <button onclick="sendMessage('شكوى', document.getElementById('complaintText').value)">إرسال</button>
+    <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
+  </div>
+
+  <!-- اقتراحات -->
+  <div id="suggestion" class="popup">
+    <h3>💡 أرسل اقتراحك</h3>
+    <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
+    <button onclick="sendMessage('اقتراح', document.getElementById('suggestionText').value)">إرسال</button>
+    <button class="popup-close" onclick="closePopup('suggestion')">إغلاق</button>
   </div>
 
   <script>
-    function callEmergency() {
-      window.location.href = "tel:102";
+    emailjs.init("k_-XPBpAVOGXECMjt");
+
+    function openPopup(id) {
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function closePopup(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function sendMessage(type, message) {
+      if (!message.trim()) return alert("يرجى كتابة الرسالة.");
+
+      const time = new Date().toLocaleString();
+
+      emailjs.send("service_ybbx78g", "template_qkumhvs", {
+        type,
+        message,
+        time,
+        phone: "—",
+        coords: "—",
+        location: "—",
+        maplink: "—",
+        incidentTypes: type
+      }).then(() => {
+        alert(`✅ تم إرسال ${type} بنجاح`);
+        closePopup(type === "شكوى" ? 'complaint' : 'suggestion');
+      }, err => {
+        alert("❌ فشل الإرسال");
+        console.error(err);
+      });
+    }
+
+    function showAbout() {
+      alert("هذا التطبيق يهدف إلى تسهيل الوصول إلى خدمات الدفاع المدني وتقديم البلاغات بشكل سريع في محافظة رام الله والبيرة.");
     }
   </script>
 </body>
