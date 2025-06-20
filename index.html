@@ -2,6 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تطبيق مراكز الدفاع المدني في محافظة رام الله والبيرة</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
@@ -18,18 +19,13 @@
       height: 100vh;
     }
     .welcome-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-      max-width: 1000px;
       width: 90%;
+      max-width: 600px;
+      text-align: center;
+      background-color: rgba(0,0,0,0.7);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
     }
     .welcome-box h1 {
       font-size: 2em;
@@ -40,16 +36,17 @@
       margin-bottom: 20px;
     }
     .welcome-box a, .welcome-box button {
-      padding: 10px 15px;
-      font-size: 1em;
-      margin: 5px;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
       color: white;
-      text-decoration: none;
       background-color: #ff4500;
       border: none;
       border-radius: 5px;
+      text-decoration: none;
+      font-size: 1em;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
     .welcome-box a:hover, .welcome-box button:hover {
       background-color: #e63900;
@@ -61,13 +58,11 @@
     <div class="welcome-box">
       <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في محافظة رام الله والبيرة</h1>
       <p>ساعدنا في إنقاذ الأرواح… بلّغ عن موقع الحريق الآن. كل ثانية بتفرق</p>
-
       <a href="indexx.html">التعرف على مراكز الدفاع المدني في المحافظة</a>
       <a href="report.html">تقديم بلاغ حريق</a>
       <button onclick="callEmergency()">اتصل بنا</button>
     </div>
   </div>
-
   <script>
     function callEmergency() {
       alert("رقم الطوارئ: 102");
