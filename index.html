@@ -33,25 +33,26 @@
     }
 
     nav a, nav button {
-      background-color: #ff5722;
       border: none;
-      color: white;
+      color: black;
       padding: 10px 16px;
       text-decoration: none;
       border-radius: 6px;
       font-size: 1em;
       cursor: pointer;
       transition: 0.3s;
+      background-color: #ffc107; /* أصفر للباقي */
     }
 
-    nav .highlight {
-      background-color: #ffc107;
-      color: black;
+    nav a.highlight {
+      background-color: #d32f2f !important; /* أحمر للبلاغ */
+      color: white;
       font-weight: bold;
     }
 
     nav a:hover, nav button:hover {
-      background-color: #e64a19;
+      background-color: #ff9800;
+      color: white;
     }
 
     .popup {
@@ -67,6 +68,7 @@
       width: 400px;
       box-shadow: 0 0 10px #fff;
       z-index: 999;
+      text-align: center;
     }
 
     .popup textarea {
@@ -81,11 +83,17 @@
 
     .popup button {
       background-color: #28a745;
+      color: white;
     }
 
     .popup-close {
       margin-top: 10px;
       background: #b71c1c;
+    }
+
+    .popup p {
+      line-height: 1.6;
+      white-space: pre-line;
     }
 
     @media (max-width: 600px) {
@@ -100,12 +108,13 @@
   <header>مراكز الدفاع المدني الفلسطيني</header>
 
   <nav>
-    <a href="indexx.html">🔥 المراكز</a>
-    <a href="report.html" class="highlight">📝 تقديم بلاغ</a>
+    <a href="indexx.html">📍 مراكز المحافظة</a>
+    <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
     <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
     <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
     <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
-    <button onclick="showAbout()">👤 من نحن</button>
+    <button onclick="showAbout()">ℹ️ عن التطبيق</button>
+    <button onclick="showTeam()">👩‍🎓 من نحن</button>
   </nav>
 
   <!-- شكاوى -->
@@ -122,6 +131,19 @@
     <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
     <button onclick="sendMessage('اقتراح', document.getElementById('suggestionText').value)">إرسال</button>
     <button class="popup-close" onclick="closePopup('suggestion')">إغلاق</button>
+  </div>
+
+  <!-- من نحن -->
+  <div id="team" class="popup">
+    <h3>👩‍🎓 من نحن</h3>
+    <p>
+ملاك حمدان  
+إسراء فواقا  
+تخصص جيوانفورماتكس  
+جامعة بيرزيت  
+0597661969
+    </p>
+    <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
   </div>
 
   <script>
@@ -160,6 +182,10 @@
 
     function showAbout() {
       alert("هذا التطبيق يهدف إلى تسهيل الوصول إلى خدمات الدفاع المدني وتقديم البلاغات بشكل سريع في محافظة رام الله والبيرة.");
+    }
+
+    function showTeam() {
+      openPopup('team');
     }
   </script>
 </body>
