@@ -14,25 +14,22 @@
       color: white;
     }
 
-    /* تعديل الرأس ليتضمن الشعار في اليمين */
+    /* تعديل الرأس ليتضمن الشعار في اليمين مع خلفية بيضاء */
     header {
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: #fff; /* جعل الخلفية بيضاء تحت الشعار */
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end; /* الشعار على اليمين */
       align-items: center;
       padding: 30px 20px;
       border-bottom: 3px solid #ff4500;
     }
 
     header img {
-      max-height: 100px; /* زيادة حجم الشعار */
+      max-height: 120px; /* زيادة حجم الشعار */
     }
 
     .title {
-      flex: 1;
-      text-align: center;
-      font-size: 1.6em;
-      font-weight: bold;
+      display: none; /* إزالة العنوان */
     }
 
     /* شريط التنقل مع الخيارات */
@@ -122,7 +119,6 @@
 
   <!-- رأس الصفحة مع الشعار الكبير على اليمين -->
   <header>
-    <div class="title">مراكز الدفاع المدني الفلسطيني</div>
     <img src="center_logo.png" alt="BZU Logo">
   </header>
 
