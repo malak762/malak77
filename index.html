@@ -14,59 +14,58 @@
       color: white;
     }
 
+    /* تعديل الرأس ليتضمن الشعار في اليمين مع خلفية بيضاء */
     header {
-      background-color: rgba(0, 0, 0, 0.9);
-      padding: 20px;
+      background-color: #fff; /* جعل الخلفية بيضاء تحت الشعار */
       display: flex;
-      justify-content: space-between; /* شعار مع أزرار على الجانبين */
+      justify-content: flex-end; /* الشعار على اليمين */
       align-items: center;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
+      padding: 30px 20px;
+      border-bottom: 3px solid #ff4500;
     }
 
     header img {
-      max-width: 150px; /* زيادة حجم الشعار */
-      height: auto;
-      border-radius: 10px;
-      margin-left: 10px;
+      max-height: 120px; /* زيادة حجم الشعار */
     }
 
+    .title {
+      display: none; /* إزالة العنوان */
+    }
+
+    /* شريط التنقل مع الخيارات */
     nav {
       display: flex;
-      justify-content: flex-end;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 10px;
+      background-color: white; /* تغيير اللون إلى الأبيض */
+      padding: 15px;
     }
 
     nav a, nav button {
       border: none;
       color: black;
-      padding: 10px 16px;
+      padding: 12px 16px;
       text-decoration: none;
       border-radius: 6px;
       font-size: 1em;
       cursor: pointer;
       transition: 0.3s;
-      background-color: #ffc107; /* اللون الأصفر */
+      background-color: #ff9800; /* أصفر */
     }
 
     nav a.highlight {
-      background-color: #d32f2f !important; /* اللون الأحمر */
+      background-color: #d32f2f !important; /* أحمر للبلاغ */
       color: white;
       font-weight: bold;
     }
 
     nav a:hover, nav button:hover {
-      background-color: #ff9800;
+      background-color: #ff4500;
       color: white;
     }
 
-    .content-container {
-      padding: 120px 20px 20px; /* المسافة العليا لتظهر الأزرار والشعار بشكل صحيح */
-      text-align: center;
-    }
-
+    /* النوافذ المنبثقة */
     .popup {
       display: none;
       position: fixed;
@@ -108,48 +107,33 @@
       white-space: pre-line;
     }
 
-    .popup-bottom {
-      display: flex;
-      justify-content: space-between;
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      padding: 0 10px;
-    }
-
-    .popup-bottom button {
-      width: 48%;
-    }
-
-    /* تغيير لتصغير البوكس الأبيض تحت الشعار */
-    .content-container {
-      padding-top: 140px;
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- رأس الصفحة مع الشعار الكبير على اليمين -->
   <header>
-    <img src="center_logo.png" alt="Logo" />
-    <nav>
-      <a href="index.html">🏠 الرئيسية</a>
-      <a href="indexx.html">📍 مراكز المحافظة</a>
-      <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
-      <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
-    </nav>
+    <img src="center_logo.png" alt="BZU Logo">
   </header>
 
-  <div class="content-container">
-    <p>مرحبًا بك في موقع الدفاع المدني الفلسطيني</p>
-    <p>نحن هنا لخدمتك في محافظة رام الله والبيرة، تابعنا لتقديم البلاغات والمساعدة في أي وقت.</p>
-  </div>
-
-  <!-- شكاوى و اقتراحات -->
-  <div class="popup-bottom">
+  <!-- شريط التنقل مع الخيارات -->
+  <nav>
+    <a href="indexx.html">📍 مراكز المحافظة</a>
+    <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
+    <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
     <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
     <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
-  </div>
+    <button onclick="showAbout()">ℹ️ عن التطبيق</button>
+    <button onclick="showTeam()">👩‍🎓 من نحن</button>
+  </nav>
 
-  <!-- شكاوى -->
+  <!-- الشكاوي -->
   <div id="complaint" class="popup">
     <h3>💬 أرسل شكواك</h3>
     <textarea id="complaintText" placeholder="اكتب شكواك هنا..."></textarea>
@@ -157,7 +141,7 @@
     <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
   </div>
 
-  <!-- اقتراحات -->
+  <!-- الاقتراحات -->
   <div id="suggestion" class="popup">
     <h3>💡 أرسل اقتراحك</h3>
     <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
@@ -169,11 +153,11 @@
   <div id="team" class="popup">
     <h3>👩‍🎓 من نحن</h3>
     <p>
-      ملاك حمدان<br />
-      إسراء فواقا<br />
-      تخصص جيوانفورماتكس<br />
-      جامعة بيرزيت<br />
-      0597661969
+ملاك حمدان  
+إسراء فواقا  
+تخصص جيوانفورماتكس  
+جامعة بيرزيت  
+0597661969
     </p>
     <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
   </div>
@@ -220,5 +204,6 @@
       openPopup('team');
     }
   </script>
+
 </body>
 </html>
