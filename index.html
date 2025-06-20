@@ -21,7 +21,7 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      padding: 30px 20px;
+      padding: 10px 20px;
       border-bottom: 3px solid #ff4500;
     }
 
@@ -41,12 +41,12 @@
 
     .marquee span {
       display: inline-block;
-      animation: marquee 15s linear infinite;
+      animation: marquee 30s linear infinite; /* زيادة الوقت إلى 30 ثانية */
     }
 
     @keyframes marquee {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
+      0% { transform: translateX(-100%); } /* بداية الحركة من اليسار */
+      100% { transform: translateX(100%); } /* نهاية الحركة إلى اليمين */
     }
 
     /* شريط التنقل مع الأزرار */
@@ -81,7 +81,7 @@
     nav a:hover, nav button:hover {
       background-color: #ff9800;
       color: white;
-      transform: scale(1.05);
+      transform: scale(1.05); /* تكبير الأزرار عند التمرير */
     }
 
     /* النوافذ المنبثقة */
