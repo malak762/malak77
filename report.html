@@ -52,6 +52,21 @@
       margin-bottom: 20px;
       background-color: #007BFF;
     }
+    #incident-popup {
+      display: none;
+      background: #fff;
+      color: #000;
+      padding: 10px;
+      margin-top: 10px;
+      text-align: right;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    #incident-popup label {
+      display: block;
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
@@ -74,6 +89,34 @@
       <input type="text" id="phone-number" placeholder="059-XXXXXXX">
     </div>
 
+    <div style="margin-top: 15px;">
+      <label>نوع الحادث (اختياري):</label><br>
+      <button type="button" onclick="togglePopup()">اختر نوع الحادث</button>
+      <div id="incident-popup">
+        <label><input type="checkbox" value="حريق"> حريق</label>
+        <label><input type="checkbox" value="انقاذ"> إنقاذ</label>
+        <label><input type="checkbox" value="حادث مرور"> حادث مرور</label>
+        <label><input type="checkbox" value="إنقاذ أشخاص محاصرين"> إنقاذ أشخاص محاصرين</label>
+        <label><input type="checkbox" value="إنتشال جثة"> إنتشال جثة</label>
+        <label><input type="checkbox" value="إنقاذ مصابين"> إنقاذ مصابين</label>
+        <label><input type="checkbox" value="تزويد مياه"> تزويد مياه</label>
+        <label><input type="checkbox" value="إنقاذ ممتلكات"> إنقاذ ممتلكات</label>
+        <label><input type="checkbox" value="إنهيار"> إنهيار</label>
+        <label><input type="checkbox" value="شفط مياه"> شفط مياه</label>
+        <label><input type="checkbox" value="إنقاذ حيوان"> إنقاذ حيوان</label>
+        <label><input type="checkbox" value="فتح طريق"> فتح طريق</label>
+        <label><input type="checkbox" value="معالجة تسرب غاز"> معالجة تسرب غاز</label>
+        <label><input type="checkbox" value="التخلص من آفات ضارة"> التخلص من آفات ضارة</label>
+        <label><input type="checkbox" value="جسم مشبوه"> جسم مشبوه</label>
+        <label><input type="checkbox" value="إنقاذ من مكان مغلق"> إنقاذ من مكان مغلق</label>
+        <label><input type="checkbox" value="إزالة زيوت عن الطريق"> إزالة زيوت عن الطريق</label>
+        <label><input type="checkbox" value="سحب مركبة"> سحب مركبة</label>
+        <label><input type="checkbox" value="إزالة أشجار"> إزالة أشجار</label>
+        <label><input type="checkbox" value="طلب مساعدة"> طلب مساعدة</label>
+        <label><input type="checkbox" value="حادث آخر"> حادث آخر</label>
+      </div>
+    </div>
+
     <button onclick="submitFireReport()">إرسال البلاغ</button>
   </div>
 
@@ -94,6 +137,19 @@
       document.getElementById("location-input").style.display = "block";
     }
 
+    function togglePopup() {
+      const popup = document.getElementById("incident-popup");
+      popup.style.display = (popup.style.display === "none") ? "block" : "none";
+    }
+
+    document.getElementById("phone-number").addEventListener("input", function(e) {
+      let input = e.target.value.replace(/\D/g, '');
+      if (input.length > 3) {
+        input = input.slice(0, 3) + '-' + input.slice(3);
+      }
+      e.target.value = input.slice(0, 11);
+    });
+
     function submitFireReport() {
       const selected = document.querySelector('input[name="location"]:checked');
       const phone = document.getElementById("phone-number").value.trim();
@@ -104,6 +160,9 @@
         return;
       }
 
+      const incidentTypes = Array.from(document.querySelectorAll('#incident-popup input:checked'))
+        .map(el => el.value).join(", ") || "لم يتم التحديد";
+
       const type = selected.value === 'current' ? 'موقعك الحالي' : 'موقع يدوي';
       const time = new Date().toLocaleString();
 
@@ -113,7 +172,7 @@
           const lng = position.coords.longitude;
           const coords = `${lat}, ${lng}`;
           const maplink = `https://maps.google.com/?q=${lat},${lng}`;
-          sendEmail({ type, location: '—', coords, maplink, time, phone });
+          sendEmail({ type, location: '—', coords, maplink, time, phone, incidentTypes });
         }, function() {
           alert("تعذر تحديد الموقع.");
         });
@@ -121,7 +180,7 @@
         const locationInput = document.getElementById("other-location-input").value.trim();
         if (!locationInput) return alert("الرجاء إدخال الموقع يدويًا.");
         const maplink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationInput)}`;
-        sendEmail({ type, location: locationInput, coords: '—', maplink, time, phone });
+        sendEmail({ type, location: locationInput, coords: '—', maplink, time, phone, incidentTypes });
       }
     }
 
@@ -134,15 +193,6 @@
           console.error(error);
         });
     }
-
-    // تنسيق رقم الهاتف تلقائيًا
-    document.getElementById("phone-number").addEventListener("input", function(e) {
-      let input = e.target.value.replace(/\D/g, ''); // إزالة أي حرف غير رقم
-      if (input.length > 3) {
-        input = input.slice(0, 3) + '-' + input.slice(3);
-      }
-      e.target.value = input.slice(0, 11); // 3 + 1 + 7
-    });
   </script>
 </body>
 </html>
