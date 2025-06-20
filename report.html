@@ -71,7 +71,7 @@
   </div>
 
   <script>
-    emailjs.init("k_-XPBpAVOGXECMjt");
+    emailjs.init("k_-XPBpAVOGXECMjt"); // Public Key
 
     function getLocation() {
       if (navigator.geolocation) {
@@ -100,11 +100,15 @@
       if (selected.value === 'current') {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            const coords = `${position.coords.latitude}, ${position.coords.longitude}`;
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const coords = `${lat}, ${lng}`;
+            const maplink = `https://maps.google.com/?q=${lat},${lng}`;
             sendEmail({
               type,
               location: '—',
               coords,
+              maplink,
               time
             });
           }, function() {
@@ -123,6 +127,7 @@
           type,
           location: locationInput,
           coords: '—',
+          maplink: '—',
           time
         });
       }
@@ -133,7 +138,7 @@
         .then(function(response) {
           alert("✅ تم إرسال البلاغ إلى البريد الإلكتروني بنجاح.");
         }, function(error) {
-          alert("❌ فشل إرسال البلاغ. تأكد من إعدادات القالب.");
+          alert("❌ فشل إرسال البلاغ. تأكد من الإعدادات.");
           console.error(error);
         });
     }
