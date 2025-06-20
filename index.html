@@ -2,76 +2,106 @@
 <html lang="ar">
 <head>
   <meta charset="utf-8" />
-  <title>تطبيق مراكز الدفاع المدني في محافظة رام الله والبيرة</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <title>مراكز الدفاع المدني في محافظة رام الله والبيرة</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background: url('fire1.jpeg') no-repeat center center fixed;
-      background-size: cover;
+      background-color: #f0f0f0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
     }
-    .welcome-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-      max-width: 1000px;
-      width: 90%;
+    #map {
+      height: 80vh;
+      width: 100%;
     }
-    .welcome-box h1 {
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-    .welcome-box p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
-    .welcome-box a, .welcome-box button {
-      padding: 10px 15px;
+    .back-button {
+      margin: 15px;
+      padding: 10px 20px;
       font-size: 1em;
-      margin: 5px;
       color: white;
-      text-decoration: none;
-      background-color: #ff4500;
+      background: #007BFF;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: 0.3s;
     }
-    .welcome-box a:hover, .welcome-box button:hover {
-      background-color: #e63900;
+    .back-button:hover {
+      background: #0056b3;
+    }
+    .leaflet-popup-content {
+      direction: rtl;
+    }
+    /* مفتاح الخريطة */
+    .legend {
+      background-color: white;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 12px;
+    }
+    .legend h4 {
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="welcome-container">
-    <div class="welcome-box">
-      <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في محافظة رام الله والبيرة</h1>
-      <p>ساعدنا في إنقاذ الأرواح… بلّغ عن موقع الحريق الآن. كل ثانية بتفرق</p>
+  <button class="back-button" onclick="window.location.href = 'index.html';">العودة إلى الصفحة الرئيسية</button>
+  <div id="map"></div>
 
-      <a href="indexx.html">التعرف على مراكز الدفاع المدني في المحافظة</a>
-      <a href="report.html">تقديم بلاغ حريق</a>
-      <button onclick="callEmergency()">اتصل بنا</button>
-    </div>
-  </div>
-
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
   <script>
-    function callEmergency() {
-      alert("رقم الطوارئ: 102");
-    }
+    const map = L.map('map').setView([31.7767, 35.2332], 8);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const markers = L.markerClusterGroup();
+
+    // تعريف الأيقونات للمؤشرات
+    const icon = new L.Icon({
+      iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',  // يمكنك تغيير هذه الأيقونة حسب الحاجة
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    const centers = [
+      { name: "مركز رام الله", coordinates: [31.893, 35.187], description: "مركز يقع في مدينة رام الله." },
+      { name: "مركز البيرة", coordinates: [31.928, 35.218], description: "مركز يقع في مدينة البيرة." },
+      { name: "مركز بيرزيت", coordinates: [31.969, 35.201], description: "مركز يقع في مدينة بيرزيت." },
+      { name: "مركز نعلين", coordinates: [31.946, 35.021], description: "مركز يقع في قرية نعلين." },
+      { name: "مركز بيت لقيا", coordinates: [31.867, 35.063], description: "مركز يقع في قرية بيت لقيا." },
+      { name: "مركز الطيبة", coordinates: [31.959, 35.296], description: "مركز يقع في قرية الطيبة." },
+      { name: "مركز عبوين", coordinates: [32.032, 35.199], description: "مركز يقع في قرية عبوين." }
+    ];
+
+    centers.forEach(center => {
+      const marker = L.marker(center.coordinates, { icon: icon });
+      marker.bindPopup(`<h3>${center.name}</h3><p>${center.description}</p>`);
+      markers.addLayer(marker);
+    });
+
+    map.addLayer(markers);
+
+    // إضافة مفتاح الخريطة
+    const legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function() {
+      const div = L.DomUtil.create('div', 'legend');
+      div.innerHTML = '<h4>مراكز الدفاع المدني</h4><p>الموقع الحالي للمراكز</p>';
+      return div;
+    };
+
+    legend.addTo(map);
   </script>
 </body>
 </html>
