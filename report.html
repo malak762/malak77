@@ -129,11 +129,11 @@
     }
 
     function sendEmail(data) {
-      emailjs.send("service_io6dz2n", "template_7vrtfr1", data)
+      emailjs.send("service_ybbx78g", "template_7vrtfr1", data)
         .then(function(response) {
           alert("✅ تم إرسال البلاغ إلى البريد الإلكتروني بنجاح.");
         }, function(error) {
-          alert("❌ فشل إرسال البلاغ. الرجاء المحاولة لاحقًا.");
+          alert("❌ فشل إرسال البلاغ. تأكد من إعدادات القالب.");
           console.error(error);
         });
     }
