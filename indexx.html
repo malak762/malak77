@@ -2,6 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>مراكز الدفاع المدني في محافظة رام الله والبيرة</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
@@ -17,8 +18,9 @@
       align-items: center;
     }
     #map {
-      height: 80vh;
-      width: 100%;
+      height: 75vh;
+      width: 95vw;
+      max-width: 1000px;
     }
     .back-button {
       margin: 15px;
@@ -37,7 +39,7 @@
   </style>
 </head>
 <body>
-  <button class="back-button" onclick="window.location.href = 'style.css';">العودة إلى الصفحة الرئيسية</button>
+  <button class="back-button" onclick="window.location.href = 'index.html';">العودة إلى الصفحة الرئيسية</button>
   <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
