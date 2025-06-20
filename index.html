@@ -14,39 +14,20 @@
       color: white;
     }
 
-    /* الشعار */
-    .bzu-header {
-      background-color: #ffca33;
-      color: black;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 2000;
-    }
-
-    .bzu-header img {
-      max-height: 40px;
-      margin-right: 20px;
-    }
-
-    .bzu-header h1 {
-      margin: 0;
-      font-size: 1.2em;
-    }
-
-    /* الهيدر الرئيسي */
     header {
-      background-color: rgba(0,0,0,0.9);
-      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
       font-size: 1.6em;
       font-weight: bold;
-      text-align: center;
       border-bottom: 3px solid #ff4500;
-      margin-top: 70px;
+    }
+
+    header img {
+      height: 50px;
+      margin-right: 0;
     }
 
     nav {
@@ -127,19 +108,21 @@
         flex-direction: column;
         align-items: center;
       }
+      header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- شعار جامعة بيرزيت -->
-  <div class="bzu-header">
-    <h1>Ramallah Waste Containers</h1>
+  <!-- رأس الصفحة مع الشعار يمين العنوان -->
+  <header>
+    <div>مراكز الدفاع المدني الفلسطيني</div>
     <img src="https://www.dci.plo.ps/files/image/plo_pic/BZU_Logo.png" alt="BZU Logo">
-  </div>
-
-  <!-- العنوان الرئيسي -->
-  <header>مراكز الدفاع المدني الفلسطيني</header>
+  </header>
 
   <nav>
     <a href="indexx.html">📍 مراكز المحافظة</a>
