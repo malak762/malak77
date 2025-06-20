@@ -58,7 +58,7 @@
       padding: 15px;
       gap: 10px;
       position: relative;
-      top: -12px; /* رفع الأزرار للأعلى */
+      top: -10px; /* رفع الأزرار للأعلى */
     }
 
     nav a, nav button {
@@ -66,8 +66,8 @@
       color: black;
       padding: 10px 14px;
       text-decoration: none;
-      border-radius: 5px;
-      font-size: 0.8em; /* تقليص حجم الأزرار */
+      border-radius: 6px;
+      font-size: 0.9em; /* تقليص حجم الأزرار */
       cursor: pointer;
       transition: 0.3s;
       background: linear-gradient(45deg, #ff4500, #ff9800);
@@ -184,12 +184,12 @@
 
   <!-- شريط التنقل مع الأزرار -->
   <nav>
-    <button onclick="showTeam()">👩‍🎓 من نحن</button>
-    <button onclick="showAbout()">ℹ️ عن التطبيق</button>
-    <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
-    <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
+    <button onclick="stayOnPage(event)">🏠 الرئيسية</button> <!-- هذا الزر يبقى في الصفحة نفسها -->
     <a href="indexx.html">📍 مراكز المحافظة</a>
-    <a href="indexx.html">🏠 الرئيسية</button>
+    <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
+    <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
+    <button onclick="showAbout()">ℹ️ عن التطبيق</button>
+    <button onclick="showTeam()">👩‍🎓 من نحن</button>
   </nav>
 
   <!-- من نحن -->
@@ -207,10 +207,12 @@
 
   <script>
     emailjs.init("k_-XPBpAVOGXECMjt");
+
+    // دالة لمنع الانتقال عند الضغط على الرئيسية
     function stayOnPage(event) {
       event.preventDefault(); // هذه الدالة ستمنع الصفحة من الانتقال
-      alert("أنت بالفعل في الصفحة الرئيسية.");  
-}
+      alert("أنت بالفعل في الصفحة الرئيسية.");
+    }
 
     function openPopup(id) {
       document.getElementById(id).style.display = 'block';
