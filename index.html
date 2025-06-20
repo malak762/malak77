@@ -14,24 +14,29 @@
       color: white;
     }
 
+    /* تعديل الشعار */
     header {
-      background-color: rgba(0,0,0,0.9);
+      background-color: rgba(0, 0, 0, 0.7);
       padding: 10px;
-      text-align: center;
-      background: rgba(0,0,0,0.7); /* أضافت خلفية دائمة للشعار */
+      display: flex;
+      justify-content: flex-end; /* جعل الشعار في الجهة اليمنى */
+      align-items: center;
     }
 
     header img {
-      max-width: 150px; /* حجم الشعار */
+      max-width: 200px; /* حجم الشعار */
       height: auto;
+      margin-bottom: 10px;
+      border-radius: 10px;
     }
 
+    /* تعديل الأزرار */
     nav {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      background-color: rgba(0,0,0,0.85);
+      background-color: rgba(0, 0, 0, 0.85);
       padding: 15px;
     }
 
@@ -121,7 +126,7 @@
   </style>
 </head>
 <body>
-  <!-- الشعار -->
+  <!-- الشعار مع البوكس الأبيض -->
   <header>
     <img src="center_logo.png" alt="Logo" />
   </header>
