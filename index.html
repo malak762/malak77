@@ -14,9 +14,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       color: white;
+    }
+
+    header {
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 1.4em;
+      font-weight: bold;
+      border-bottom: 2px solid #ff4500;
+      box-shadow: 0 2px 6px rgba(255,255,255,0.1);
     }
 
     .welcome-container {
@@ -27,12 +37,7 @@
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
       text-align: center;
-    }
-
-    .welcome-container h1 {
-      font-size: 1.8em;
-      margin-bottom: 20px;
-      line-height: 1.6;
+      margin-top: 40px;
     }
 
     .welcome-container p {
@@ -73,22 +78,29 @@
     }
 
     @media screen and (max-width: 500px) {
+      header {
+        font-size: 1.1em;
+        padding: 12px 5px;
+      }
+
       .welcome-container {
         padding: 20px 15px;
-      }
-      .welcome-container h1 {
-        font-size: 1.3em;
-      }
-      .welcome-container p {
-        font-size: 1em;
+        margin-top: 30px;
       }
     }
   </style>
 </head>
 <body>
+  <header>
+    أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني الفلسطيني في محافظة رام الله والبيرة
+  </header>
+
   <div class="welcome-container">
-    <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني الفلسطيني<br>في محافظة رام الله والبيرة</h1>
-    <p>ساعدنا في إنقاذ الأرواح… بلّغ عن موقع الحريق الآن.<br>كل ثانية بتفرق.<br>وإذا حابب تعرف أكثر عنّا، اضغط لاستكشاف مواقع المراكز.</p>
+    <p>
+      ساعدنا في إنقاذ الأرواح… بلّغ عن موقع الحريق الآن. <br>
+      كل ثانية بتفرق. <br>
+      وإذا حابب تعرف أكثر عنّا، اضغط لاستكشاف مواقع المراكز.
+    </p>
 
     <a href="indexx.html">🗺️ التعرف على مراكز الدفاع المدني في المحافظة</a>
     <a href="report.html">📝 تقديم بلاغ وقوع حادث</a>
