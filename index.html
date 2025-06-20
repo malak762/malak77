@@ -19,7 +19,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 15px 25px;
+      padding: 20px 30px;
       border-bottom: 3px solid #ff4500;
     }
 
@@ -108,23 +108,19 @@
     }
 
     @media (max-width: 600px) {
-      header {
+      nav {
         flex-direction: column;
-        gap: 10px;
-        text-align: center;
-      }
-      .title {
-        order: -1;
+        align-items: center;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- رأس الصفحة -->
+  <!-- رأس الصفحة مع الشعار محلي -->
   <header>
-    <img src="https://images.app.goo.gl/EtNg6XeewS6QXGRC7" alt="BZU Logo" class="logo">
-    <div class="title">مراكز الدفاع المدني الفلسطيني في محافظة رام الله والبيرة</div>
+    <img src="center_logo.png" alt="BZU Logo" class="logo">
+    <div class="title">مراكز الدفاع المدني الفلسطيني</div>
   </header>
 
   <!-- شريط التنقل -->
@@ -138,7 +134,7 @@
     <button onclick="showTeam()">👩‍🎓 من نحن</button>
   </nav>
 
-  <!-- النوافذ المنبثقة -->
+  <!-- الشكاوي -->
   <div id="complaint" class="popup">
     <h3>💬 أرسل شكواك</h3>
     <textarea id="complaintText" placeholder="اكتب شكواك هنا..."></textarea>
@@ -146,6 +142,7 @@
     <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
   </div>
 
+  <!-- الاقتراحات -->
   <div id="suggestion" class="popup">
     <h3>💡 أرسل اقتراحك</h3>
     <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
@@ -153,6 +150,7 @@
     <button class="popup-close" onclick="closePopup('suggestion')">إغلاق</button>
   </div>
 
+  <!-- من نحن -->
   <div id="team" class="popup">
     <h3>👩‍🎓 من نحن</h3>
     <p>
@@ -165,7 +163,6 @@
     <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
   </div>
 
-  <!-- سكريبت -->
   <script>
     emailjs.init("k_-XPBpAVOGXECMjt");
 
