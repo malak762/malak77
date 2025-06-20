@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تقديم بلاغ حريق</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
     body {
       background: url('fire1.jpeg') no-repeat center center fixed;
@@ -70,6 +71,8 @@
   </div>
 
   <script>
+    emailjs.init("k_-XPBpAVOGXECMjt");
+
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -85,16 +88,54 @@
     }
 
     function submitFireReport() {
-      const location = document.querySelector('input[name="location"]:checked')?.value;
-      if (!location) return alert("الرجاء اختيار الموقع.");
-
-      if (location === 'current') {
-        confirm("هل أنت متأكد من الإبلاغ؟") ? alert("تم الإبلاغ بموقعك الحالي.") : alert("تم الإلغاء.");
-      } else {
-        const otherLoc = document.getElementById("other-location-input").value.trim();
-        if (!otherLoc) return alert("الرجاء إدخال الموقع.");
-        confirm("هل أنت متأكد من الإبلاغ؟") ? alert("تم إرسال البلاغ.") : alert("تم الإلغاء.");
+      const selected = document.querySelector('input[name="location"]:checked');
+      if (!selected) {
+        alert("الرجاء اختيار الموقع.");
+        return;
       }
+
+      const type = selected.value === 'current' ? 'موقعك الحالي' : 'موقع يدوي';
+      const time = new Date().toLocaleString();
+
+      if (selected.value === 'current') {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            const coords = `${position.coords.latitude}, ${position.coords.longitude}`;
+            sendEmail({
+              type,
+              location: '—',
+              coords,
+              time
+            });
+          }, function() {
+            alert("تعذر تحديد الموقع.");
+          });
+        } else {
+          alert("المتصفح لا يدعم GPS.");
+        }
+      } else {
+        const locationInput = document.getElementById("other-location-input").value.trim();
+        if (!locationInput) {
+          alert("الرجاء إدخال الموقع يدويًا.");
+          return;
+        }
+        sendEmail({
+          type,
+          location: locationInput,
+          coords: '—',
+          time
+        });
+      }
+    }
+
+    function sendEmail(data) {
+      emailjs.send("service_io6dz2n", "templates/7vrtfr1", data)
+        .then(function(response) {
+          alert("✅ تم إرسال البلاغ إلى البريد الإلكتروني بنجاح.");
+        }, function(error) {
+          alert("❌ فشل إرسال البلاغ. الرجاء المحاولة لاحقًا.");
+          console.error(error);
+        });
     }
   </script>
 </body>
