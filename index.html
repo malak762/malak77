@@ -34,20 +34,33 @@
     .back-button:hover {
       background: #0056b3;
     }
-    .leaflet-popup-content {
-      direction: rtl;
-    }
-    /* مفتاح الخريطة */
-    .legend {
+    /* نافذة منبثقة في الزاوية العلوية اليمنى */
+    .popup-window {
+      position: absolute;
+      top: 10px;
+      right: 10px;
       background-color: white;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 12px;
-      cursor: pointer;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      max-height: 80vh;
+      overflow-y: auto;
     }
-    .legend h4 {
-      margin-bottom: 10px;
+    .popup-window h4 {
+      margin-top: 0;
+    }
+    .popup-window ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .popup-window li {
+      padding: 8px 0;
+      cursor: pointer;
+      color: #007BFF;
+    }
+    .popup-window li:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -66,15 +79,6 @@
 
     const markers = L.markerClusterGroup();
 
-    // تعريف الأيقونات للمؤشرات
-    const icon = new L.Icon({
-      iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',  // يمكنك تغيير هذه الأيقونة حسب الحاجة
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
-
     const centers = [
       { name: "مركز رام الله", coordinates: [31.893, 35.187], description: "مركز يقع في مدينة رام الله." },
       { name: "مركز البيرة", coordinates: [31.928, 35.218], description: "مركز يقع في مدينة البيرة." },
@@ -86,35 +90,30 @@
     ];
 
     centers.forEach(center => {
-      const marker = L.marker(center.coordinates, { icon: icon });
+      const marker = L.marker(center.coordinates);
       marker.bindPopup(`<h3>${center.name}</h3><p>${center.description}</p>`);
       markers.addLayer(marker);
     });
 
     map.addLayer(markers);
 
-    // إضافة مفتاح الخريطة في أعلى اليمين
-    const legend = L.control({ position: 'topright' });
+    // إنشاء نافذة منبثقة في أعلى يمين الصفحة
+    const popupWindow = document.createElement('div');
+    popupWindow.className = 'popup-window';
+    popupWindow.innerHTML = `
+      <h4>مراكز الدفاع المدني في محافظة رام الله والبيرة</h4>
+      <ul>
+        ${centers.map(center => 
+          `<li onclick="moveToCenter(${center.coordinates[0]}, ${center.coordinates[1]})">${center.name}</li>`
+        ).join('')}
+      </ul>
+    `;
+    document.body.appendChild(popupWindow);
 
-    legend.onAdd = function() {
-      const div = L.DomUtil.create('div', 'legend');
-      div.innerHTML = '<h4>مراكز الدفاع المدني</h4><p>اضغط على أي مركز لعرض التفاصيل</p>';
-      div.onclick = function() {
-        // عند الضغط على المفتاح، تعرض نافذة منبثقة تحتوي على جميع المراكز
-        let centersList = '<h4>قائمة المراكز:</h4><ul>';
-        centers.forEach(center => {
-          centersList += `<li><b>${center.name}</b>: ${center.description}</li>`;
-        });
-        centersList += '</ul>';
-        L.popup()
-          .setLatLng(map.getCenter()) // عرض النافذة في وسط الخريطة
-          .setContent(centersList)
-          .openOn(map);
-      };
-      return div;
-    };
-
-    legend.addTo(map);
+    // دالة تحريك الخريطة إلى المركز المحدد
+    function moveToCenter(lat, lng) {
+      map.setView([lat, lng], 14);
+    }
   </script>
 </body>
 </html>
