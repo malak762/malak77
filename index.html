@@ -1,191 +1,150 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مراكز الدفاع المدني</title>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <title>مراكز الدفاع المدني الفلسطيني</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      padding: 0;
       background: url('fire1.jpeg') no-repeat center center fixed;
       background-size: cover;
+      font-family: Arial, sans-serif;
       color: white;
     }
-
     header {
-      background-color: rgba(0,0,0,0.9);
-      padding: 20px;
-      font-size: 1.6em;
-      font-weight: bold;
-      text-align: center;
-      border-bottom: 3px solid #ff4500;
+      background-color: rgba(0,0,0,0.7);
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+    }
+    header img {
+      height: 40px;
+      margin-left: 10px;
     }
 
     nav {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      background-color: rgba(0,0,0,0.85);
-      padding: 15px;
+      background-color: #FFD700;
+      padding: 10px;
     }
 
-    nav a, nav button {
-      border: none;
-      color: black;
-      padding: 10px 16px;
-      text-decoration: none;
-      border-radius: 6px;
+    nav button {
+      margin: 5px;
+      padding: 10px 15px;
       font-size: 1em;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
+      color: white;
+      background-color: #FFD700;
       transition: 0.3s;
-      background-color: #ffc107; /* أصفر للباقي */
     }
 
-    nav a.highlight {
-      background-color: #d32f2f !important; /* أحمر للبلاغ */
-      color: white;
-      font-weight: bold;
+    nav button.report {
+      background-color: #ff4500;
     }
 
-    nav a:hover, nav button:hover {
-      background-color: #ff9800;
-      color: white;
+    nav button:hover {
+      background-color: #e6c200;
+    }
+
+    nav button.report:hover {
+      background-color: #e63900;
     }
 
     .popup {
       display: none;
-      position: fixed;
-      top: 25%;
-      left: 50%;
-      transform: translate(-50%, -25%);
-      background: rgba(0,0,0,0.95);
+      background-color: rgba(0,0,0,0.8);
       padding: 20px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
       border-radius: 10px;
-      max-width: 90%;
-      width: 400px;
-      box-shadow: 0 0 10px #fff;
-      z-index: 999;
-      text-align: center;
+    }
+
+    .popup h2 {
+      margin-top: 0;
+      font-size: 1.2em;
     }
 
     .popup textarea {
       width: 100%;
       height: 100px;
-      padding: 10px;
-      margin-bottom: 10px;
       border-radius: 5px;
-      border: none;
-      resize: none;
+      padding: 10px;
+      margin-top: 10px;
     }
 
     .popup button {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .popup-close {
+      background-color: #ff4500;
       margin-top: 10px;
-      background: #b71c1c;
     }
 
-    .popup p {
-      line-height: 1.6;
-      white-space: pre-line;
+    .popup button:hover {
+      background-color: #e63900;
     }
 
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
-        align-items: center;
       }
     }
   </style>
 </head>
 <body>
-  <header>مراكز الدفاع المدني الفلسطيني</header>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Palestinian_Civil_Defense_Logo.png/120px-Palestinian_Civil_Defense_Logo.png" alt="شعار الدفاع المدني">
+    مراكز الدفاع المدني الفلسطيني
+  </header>
 
   <nav>
-    <a href="indexx.html">📍 مراكز المحافظة</a>
-    <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
-    <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
-    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
-    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
-    <button onclick="showAbout()">ℹ️ عن التطبيق</button>
-    <button onclick="showTeam()">👩‍🎓 من نحن</button>
+    <button onclick="showBox('centers')">مراكز المحافظة</button>
+    <button class="report" onclick="location.href='report.html'">تقديم بلاغ وقوع حادث</button>
+    <button onclick="alert('رقم الطوارئ: 102')">اتصل بنا</button>
+    <button onclick="showBox('complaint')">صندوق شكاوي</button>
+    <button onclick="showBox('suggestion')">صندوق اقتراحات</button>
+    <button onclick="showBox('about')">عن التطبيق</button>
+    <button onclick="showBox('team')">من نحن</button>
   </nav>
 
-  <!-- شكاوى -->
   <div id="complaint" class="popup">
-    <h3>💬 أرسل شكواك</h3>
-    <textarea id="complaintText" placeholder="اكتب شكواك هنا..."></textarea>
-    <button onclick="sendMessage('شكوى', document.getElementById('complaintText').value)">إرسال</button>
-    <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
+    <h2>صندوق الشكاوي</h2>
+    <textarea placeholder="اكتب شكواك هنا..."></textarea>
+    <button onclick="alert('تم إرسال الشكوى. شكراً لتواصلك معنا!')">إرسال</button>
   </div>
 
-  <!-- اقتراحات -->
   <div id="suggestion" class="popup">
-    <h3>💡 أرسل اقتراحك</h3>
-    <textarea id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
-    <button onclick="sendMessage('اقتراح', document.getElementById('suggestionText').value)">إرسال</button>
-    <button class="popup-close" onclick="closePopup('suggestion')">إغلاق</button>
+    <h2>صندوق الاقتراحات</h2>
+    <textarea placeholder="اكتب اقتراحك هنا..."></textarea>
+    <button onclick="alert('تم إرسال الاقتراح. شكراً لمساهمتك!')">إرسال</button>
   </div>
 
-  <!-- من نحن -->
+  <div id="about" class="popup">
+    <h2>عن التطبيق</h2>
+    <p>ساعدنا في إنقاذ الأرواح… بلّغ عن موقع الحريق الآن. كل ثانية بتفرق. وإذا حابب تعرف أكثر عنّا، اضغط لاستكشاف مواقع المراكز.</p>
+  </div>
+
   <div id="team" class="popup">
-    <h3>👩‍🎓 من نحن</h3>
-    <p>
-ملاك حمدان  
-إسراء فواقا  
-تخصص جيوانفورماتكس  
-جامعة بيرزيت  
-0597661969
-    </p>
-    <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
+    <h2>من نحن</h2>
+    <p>• ملاك حمدان<br>• إسراء فواقا<br>• تخصص جيوانفورماتكس<br>• جامعة بيرزيت<br>• 0597661969</p>
+  </div>
+
+  <div id="centers" class="popup">
+    <h2>مراكز المحافظة</h2>
+    <p>استكشف مواقع المراكز على الخريطة من خلال الصفحة الخاصة بها.</p>
   </div>
 
   <script>
-    emailjs.init("k_-XPBpAVOGXECMjt");
-
-    function openPopup(id) {
+    function showBox(id) {
+      document.querySelectorAll('.popup').forEach(el => el.style.display = 'none');
       document.getElementById(id).style.display = 'block';
-    }
-
-    function closePopup(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-
-    function sendMessage(type, message) {
-      if (!message.trim()) return alert("يرجى كتابة الرسالة.");
-
-      const time = new Date().toLocaleString();
-
-      emailjs.send("service_ybbx78g", "template_qkumhvs", {
-        type,
-        message,
-        time,
-        phone: "—",
-        coords: "—",
-        location: "—",
-        maplink: "—",
-        incidentTypes: type
-      }).then(() => {
-        alert(`✅ تم إرسال ${type} بنجاح`);
-        closePopup(type === "شكوى" ? 'complaint' : 'suggestion');
-      }, err => {
-        alert("❌ فشل الإرسال");
-        console.error(err);
-      });
-    }
-
-    function showAbout() {
-      alert("هذا التطبيق يهدف إلى تسهيل الوصول إلى خدمات الدفاع المدني وتقديم البلاغات بشكل سريع في محافظة رام الله والبيرة.");
-    }
-
-    function showTeam() {
-      openPopup('team');
+      window.scrollTo({ top: 200, behavior: 'smooth' });
     }
   </script>
 </body>
