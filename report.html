@@ -1,228 +1,220 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بلاغ وقوع حادث</title>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <style>
-    /* فيديو الخلفية */
-    #bg-video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: start;
-      min-height: 100vh;
-      padding: 40px 20px;
-      color: white;
-      /* إلغاء الخلفية السابقة */
-      background: none;
-    }
-
-    .form-container {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-      z-index: 1;
-      position: relative;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 1em;
-      background-color: #ff4500;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-      width: 100%;
-    }
-    button:hover {
-      background-color: #e63900;
-    }
-
-    input[type="text"] {
-      width: 90%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 5px;
-      direction: ltr;
-    }
-
-    .back-button {
-      margin-bottom: 20px;
-      background-color: #007BFF;
-      position: relative;
-      z-index: 1;
-    }
-
-    #incident-popup {
-      display: none;
-      background: #fff;
-      color: #000;
-      padding: 10px;
-      margin-top: 10px;
-      text-align: right;
-      border-radius: 5px;
-      max-height: 200px;
-      overflow-y: auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    #incident-popup label {
-      display: block;
-      margin-bottom: 5px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>بلاغ وقوع حادث</title>
+<style>
+  /* فيديو الخلفية */
+  #bg-video {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .form-container {
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+  }
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #ff4500;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+  }
+  button:hover {
+    background-color: #e63900;
+  }
+  input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    direction: ltr;
+  }
+  .back-button {
+    margin-bottom: 20px;
+    background-color: #007BFF;
+    position: relative;
+    z-index: 1;
+    width: 200px;
+  }
+  #incident-popup {
+    display: none;
+    background: #fff;
+    color: #000;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: right;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+  }
+  #incident-popup label {
+    display: block;
+    margin-bottom: 5px;
+  }
+</style>
 </head>
 <body>
-  <!-- فيديو الخلفية -->
-  <video autoplay muted loop id="bg-video">
-    <source src="fire.mp4" type="video/mp4" />
-    متصفحك لا يدعم تشغيل الفيديو.
-  </video>
 
-  <button class="back-button" onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
+<video autoplay muted loop playsinline id="bg-video">
+  <source src="fire.mp4" type="video/mp4" />
+  متصفحك لا يدعم تشغيل الفيديو.
+</video>
 
-  <div class="form-container">
-    <h2>بلاغ وقوع حادث</h2>
+<button class="back-button" onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
 
-    <label>اختر موقع الحادث:</label><br>
-    <input type="radio" name="location" value="current" onclick="getLocation()"> موقعك الحالي<br>
-    <input type="radio" name="location" value="other" onclick="showLocationInput()"> موقع آخر<br>
+<div class="form-container">
+  <h2>بلاغ وقوع حادث</h2>
 
-    <div id="location-input" style="display:none;">
-      <label>أدخل الموقع:</label><br>
-      <input type="text" id="other-location-input" placeholder="مثال: شارع القدس - رام الله">
-    </div>
+  <label>اختر موقع الحادث:</label><br>
+  <input type="radio" name="location" value="current" onclick="getLocation()"> موقعك الحالي<br>
+  <input type="radio" name="location" value="other" onclick="showLocationInput()"> موقع آخر<br>
 
-    <div>
-      <label>رقم الهاتف للتواصل:</label><br>
-      <input type="text" id="phone-number" placeholder="059-XXXXXXX">
-    </div>
-
-    <div style="margin-top: 15px;">
-      <label>نوع الحادث (اختياري):</label><br>
-      <button type="button" onclick="togglePopup()">اختر نوع الحادث</button>
-      <div id="incident-popup">
-        <label><input type="checkbox" value="حريق"> حريق</label>
-        <label><input type="checkbox" value="انقاذ"> إنقاذ</label>
-        <label><input type="checkbox" value="حادث مرور"> حادث مرور</label>
-        <label><input type="checkbox" value="إنقاذ أشخاص محاصرين"> إنقاذ أشخاص محاصرين</label>
-        <label><input type="checkbox" value="إنتشال جثة"> إنتشال جثة</label>
-        <label><input type="checkbox" value="إنقاذ مصابين"> إنقاذ مصابين</label>
-        <label><input type="checkbox" value="تزويد مياه"> تزويد مياه</label>
-        <label><input type="checkbox" value="إنقاذ ممتلكات"> إنقاذ ممتلكات</label>
-        <label><input type="checkbox" value="إنهيار"> إنهيار</label>
-        <label><input type="checkbox" value="شفط مياه"> شفط مياه</label>
-        <label><input type="checkbox" value="إنقاذ حيوان"> إنقاذ حيوان</label>
-        <label><input type="checkbox" value="فتح طريق"> فتح طريق</label>
-        <label><input type="checkbox" value="معالجة تسرب غاز"> معالجة تسرب غاز</label>
-        <label><input type="checkbox" value="التخلص من آفات ضارة"> التخلص من آفات ضارة</label>
-        <label><input type="checkbox" value="جسم مشبوه"> جسم مشبوه</label>
-        <label><input type="checkbox" value="إنقاذ من مكان مغلق"> إنقاذ من مكان مغلق</label>
-        <label><input type="checkbox" value="إزالة زيوت عن الطريق"> إزالة زيوت عن الطريق</label>
-        <label><input type="checkbox" value="سحب مركبة"> سحب مركبة</label>
-        <label><input type="checkbox" value="إزالة أشجار"> إزالة أشجار</label>
-        <label><input type="checkbox" value="طلب مساعدة"> طلب مساعدة</label>
-        <label><input type="checkbox" value="حادث آخر"> حادث آخر</label>
-      </div>
-    </div>
-
-    <button onclick="submitFireReport()">إرسال البلاغ</button>
+  <div id="location-input" style="display:none;">
+    <label>أدخل الموقع:</label><br>
+    <input type="text" id="other-location-input" placeholder="مثال: شارع القدس - رام الله">
   </div>
 
-  <script>
-    emailjs.init("k_-XPBpAVOGXECMjt"); // Public Key
+  <div>
+    <label>رقم الهاتف للتواصل:</label><br>
+    <input type="text" id="phone-number" placeholder="059-XXXXXXX">
+  </div>
 
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          alert("موقعك الحالي: " + position.coords.latitude + ", " + position.coords.longitude);
-        });
-      } else {
-        alert("المتصفح لا يدعم تحديد الموقع.");
-      }
+  <div style="margin-top: 15px;">
+    <label>نوع الحادث (اختياري):</label><br>
+    <button type="button" onclick="togglePopup()">اختر نوع الحادث</button>
+    <div id="incident-popup">
+      <label><input type="checkbox" value="حريق"> حريق</label>
+      <label><input type="checkbox" value="انقاذ"> إنقاذ</label>
+      <label><input type="checkbox" value="حادث مرور"> حادث مرور</label>
+      <label><input type="checkbox" value="إنقاذ أشخاص محاصرين"> إنقاذ أشخاص محاصرين</label>
+      <label><input type="checkbox" value="إنتشال جثة"> إنتشال جثة</label>
+      <label><input type="checkbox" value="إنقاذ مصابين"> إنقاذ مصابين</label>
+      <label><input type="checkbox" value="تزويد مياه"> تزويد مياه</label>
+      <label><input type="checkbox" value="إنقاذ ممتلكات"> إنقاذ ممتلكات</label>
+      <label><input type="checkbox" value="إنهيار"> إنهيار</label>
+      <label><input type="checkbox" value="شفط مياه"> شفط مياه</label>
+      <label><input type="checkbox" value="إنقاذ حيوان"> إنقاذ حيوان</label>
+      <label><input type="checkbox" value="فتح طريق"> فتح طريق</label>
+      <label><input type="checkbox" value="معالجة تسرب غاز"> معالجة تسرب غاز</label>
+      <label><input type="checkbox" value="التخلص من آفات ضارة"> التخلص من آفات ضارة</label>
+      <label><input type="checkbox" value="جسم مشبوه"> جسم مشبوه</label>
+      <label><input type="checkbox" value="إنقاذ من مكان مغلق"> إنقاذ من مكان مغلق</label>
+      <label><input type="checkbox" value="إزالة زيوت عن الطريق"> إزالة زيوت عن الطريق</label>
+      <label><input type="checkbox" value="سحب مركبة"> سحب مركبة</label>
+      <label><input type="checkbox" value="إزالة أشجار"> إزالة أشجار</label>
+      <label><input type="checkbox" value="طلب مساعدة"> طلب مساعدة</label>
+      <label><input type="checkbox" value="حادث آخر"> حادث آخر</label>
+    </div>
+  </div>
+
+  <button onclick="submitFireReport()">إرسال البلاغ</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("k_-XPBpAVOGXECMjt");
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        alert("موقعك الحالي: " + position.coords.latitude + ", " + position.coords.longitude);
+      });
+    } else {
+      alert("المتصفح لا يدعم تحديد الموقع.");
+    }
+  }
+
+  function showLocationInput() {
+    document.getElementById("location-input").style.display = "block";
+  }
+
+  function togglePopup() {
+    const popup = document.getElementById("incident-popup");
+    popup.style.display = (popup.style.display === "none" || popup.style.display === "") ? "block" : "none";
+  }
+
+  document.getElementById("phone-number").addEventListener("input", function(e) {
+    let input = e.target.value.replace(/\D/g, '');
+    if (input.length > 3) {
+      input = input.slice(0, 3) + '-' + input.slice(3);
+    }
+    e.target.value = input.slice(0, 11);
+  });
+
+  function submitFireReport() {
+    const selected = document.querySelector('input[name="location"]:checked');
+    const phone = document.getElementById("phone-number").value.trim();
+
+    if (!selected) return alert("الرجاء اختيار الموقع.");
+    if (!/^05\d-\d{7}$/.test(phone)) {
+      alert("الرجاء إدخال رقم صحيح بالتنسيق 05X-XXXXXXX.");
+      return;
     }
 
-    function showLocationInput() {
-      document.getElementById("location-input").style.display = "block";
+    const incidentTypes = Array.from(document.querySelectorAll('#incident-popup input:checked'))
+      .map(el => el.value).join(", ") || "لم يتم التحديد";
+
+    const type = selected.value === 'current' ? 'موقعك الحالي' : 'موقع يدوي';
+    const time = new Date().toLocaleString();
+
+    if (selected.value === 'current') {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        const coords = `${lat}, ${lng}`;
+        const maplink = `https://maps.google.com/?q=${lat},${lng}`;
+        sendEmail({ type, location: '—', coords, maplink, time, phone, incidentTypes });
+      }, function() {
+        alert("تعذر تحديد الموقع.");
+      });
+    } else {
+      const locationInput = document.getElementById("other-location-input").value.trim();
+      if (!locationInput) return alert("الرجاء إدخال الموقع يدويًا.");
+      const maplink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationInput)}`;
+      sendEmail({ type, location: locationInput, coords: '—', maplink, time, phone, incidentTypes });
     }
+  }
 
-    function togglePopup() {
-      const popup = document.getElementById("incident-popup");
-      popup.style.display = (popup.style.display === "none" || popup.style.display === "") ? "block" : "none";
-    }
-
-    document.getElementById("phone-number").addEventListener("input", function(e) {
-      let input = e.target.value.replace(/\D/g, '');
-      if (input.length > 3) {
-        input = input.slice(0, 3) + '-' + input.slice(3);
-      }
-      e.target.value = input.slice(0, 11);
-    });
-
-    function submitFireReport() {
-      const selected = document.querySelector('input[name="location"]:checked');
-      const phone = document.getElementById("phone-number").value.trim();
-
-      if (!selected) return alert("الرجاء اختيار الموقع.");
-      if (!/^05\d-\d{7}$/.test(phone)) {
-        alert("الرجاء إدخال رقم صحيح بالتنسيق 05X-XXXXXXX.");
-        return;
-      }
-
-      const incidentTypes = Array.from(document.querySelectorAll('#incident-popup input:checked'))
-        .map(el => el.value).join(", ") || "لم يتم التحديد";
-
-      const type = selected.value === 'current' ? 'موقعك الحالي' : 'موقع يدوي';
-      const time = new Date().toLocaleString();
-
-      if (selected.value === 'current') {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          const coords = `${lat}, ${lng}`;
-          const maplink = `https://maps.google.com/?q=${lat},${lng}`;
-          sendEmail({ type, location: '—', coords, maplink, time, phone, incidentTypes });
-        }, function() {
-          alert("تعذر تحديد الموقع.");
-        });
-      } else {
-        const locationInput = document.getElementById("other-location-input").value.trim();
-        if (!locationInput) return alert("الرجاء إدخال الموقع يدويًا.");
-        const maplink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationInput)}`;
-        sendEmail({ type, location: locationInput, coords: '—', maplink, time, phone, incidentTypes });
-      }
-    }
-
-    function sendEmail(data) {
-      emailjs.send("service_ybbx78g", "template_qkumhvs", data)
-        .then(() => {
-          alert("✅ تم إرسال البلاغ بنجاح.");
-        }, (error) => {
-          alert("❌ فشل إرسال البلاغ.");
-          console.error(error);
-        });
-    }
-  </script>
+  function sendEmail(data) {
+    emailjs.send("service_ybbx78g", "template_qkumhvs", data)
+      .then(() => {
+        alert("✅ تم إرسال البلاغ بنجاح.");
+      }, (error) => {
+        alert("❌ فشل إرسال البلاغ.");
+        console.error(error);
+      });
+  }
+</script>
 </body>
 </html>
