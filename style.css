@@ -9,7 +9,7 @@
       padding: 0;
       font-family: Arial, sans-serif;
       /* استخدام الصورة كخلفية */
-      background: url('fire1.jpeg') no-repeat center center fixed; 
+      background: url('fire2.png') no-repeat center center fixed; 
       background-size: cover; /* تأكد من أن الصورة تغطي كامل الشاشة */
       display: flex;
       flex-direction: column;
