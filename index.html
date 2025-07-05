@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مراكز الدفاع المدني</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مراكز الدفاع المدني – الصفحة الرئيسية</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    /* خلفية مع الصورة */
+    /* ===================== خلفية الفيديو ===================== */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+      pointer-events: none; /* حتى لا يعرقل النقرات */
+    }
+
+    /* ===================== تنسيق عام ===================== */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: url('fire1.jpeg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
+      color: #fff;
     }
 
-    /* رأس الصفحة مع الشعار */
+    /* ===================== رأس الصفحة ===================== */
     header {
-      background-color: #fff;
+      background: rgba(255,255,255,0.9);
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -29,64 +39,67 @@
       max-height: 120px;
     }
 
-    /* الشريط المتحرك تحت الشعار */
+    /* ===================== الشريط المتحرك ===================== */
     .marquee {
       background-color: #ff4500;
-      color: white;
+      color: #fff;
       padding: 14px;
       font-size: 1em;
       white-space: nowrap;
       overflow: hidden;
+      direction: rtl;
     }
 
     .marquee span {
       display: inline-block;
-      animation: marquee 30s linear infinite;
+      animation: marquee 25s linear infinite;
     }
 
     @keyframes marquee {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
 
-    /* شريط التنقل مع الأزرار */
+    /* ===================== شريط التنقل ===================== */
     nav {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between; /* ترتيب الأزرار */
-      background-color: white;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.9);
       padding: 15px;
       gap: 10px;
       position: relative;
-      top: -12px; /* رفع الأزرار للأعلى */
+      top: -12px;
     }
 
-    nav a, nav button {
+    nav a,
+    nav button {
       border: none;
-      color: black;
+      color: #000;
       padding: 10px 14px;
       text-decoration: none;
       border-radius: 6px;
-      font-size: 0.9em; /* تقليص حجم الأزرار */
+      font-size: 0.9em;
       cursor: pointer;
-      transition: 0.3s;
+      transition: transform 0.3s, background 0.3s;
       background: linear-gradient(45deg, #ff4500, #ff9800);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     nav a.highlight {
       background-color: #d32f2f !important;
-      color: white;
+      color: #fff;
       font-weight: bold;
     }
 
-    nav a:hover, nav button:hover {
+    nav a:hover,
+    nav button:hover {
       background-color: #ff9800;
-      color: white;
+      color: #fff;
       transform: scale(1.05);
     }
 
-    /* النوافذ المنبثقة */
+    /* ===================== النوافذ المنبثقة ===================== */
     .popup {
       display: none;
       position: fixed;
@@ -114,8 +127,8 @@
     }
 
     .popup button {
-      background-color: #28a745;
-      color: white;
+      background: #28a745;
+      color: #fff;
     }
 
     .popup-close {
@@ -128,22 +141,7 @@
       white-space: pre-line;
     }
 
-    /* تعديل حجم البوكس تحت الأزرار */
-    .box {
-      width: 75%;
-      margin: 10px auto;
-      background-color: rgba(0,0,0,0.7);
-      padding: 20px;
-      border-radius: 6px;
-      text-align: center;
-    }
-
-    /* تحسين الخطوط */
-    body {
-      font-family: 'Roboto', sans-serif;
-    }
-
-    /* ترتيب الأزرار في أسفل الصفحة */
+    /* ===================== أزرار أسفل الصفحة ===================== */
     .footer-buttons {
       display: flex;
       justify-content: space-between;
@@ -151,14 +149,14 @@
       position: fixed;
       bottom: 10px;
       width: 100%;
-      z-index: 999;
+      z-index: 998;
     }
 
     .footer-buttons button {
       width: 48%;
     }
 
-    /* عند الحجم الصغير للشاشة */
+    /* Responsiveness */
     @media (max-width: 600px) {
       nav {
         flex-direction: column;
@@ -167,50 +165,77 @@
       .footer-buttons {
         flex-direction: column;
       }
+      .footer-buttons button {
+        width: 100%;
+        margin-bottom: 8px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- 🎥 فيديو الخلفية -->
+  <video autoplay muted loop id="bg-video">
+    <source src="fire.mp4" type="video/mp4" />
+    <!-- Fallback text -->
+    Your browser does not support the video tag.
+  </video>
 
-  <!-- رأس الصفحة مع الشعار -->
+  <!-- 🏛️ رأس الصفحة -->
   <header>
-    <img src="center_logo.png" alt="BZU Logo">
+    <img src="center_logo.png" alt="BZU Logo" />
   </header>
 
-  <!-- شريط متحرك تحت الشعار -->
-  <div class="marquee">
-    <span>مرحبًا بك في تطبيق مراكز الدفاع المدني الفلسطيني! نحن هنا لخدمتكم في محافظة رام الله والبيرة... تابعنا لتقديم البلاغات ومساعدتك في أي وقت</span>
-  </div>
+  <!-- 📢 شريط متحرك -->
+  <div class="marquee"><span>مرحبًا بك في تطبيق مراكز الدفاع المدني الفلسطيني! نحن هنا لخدمتكم في محافظة رام الله والبيرة... تابعنا لتقديم البلاغات ومساعدتك في أي وقت</span></div>
 
-  <!-- شريط التنقل مع الأزرار -->
+  <!-- 🚀 شريط التنقل -->
   <nav>
     <button onclick="showTeam()">👩‍🎓 من نحن</button>
     <button onclick="showAbout()">ℹ️ عن التطبيق</button>
     <button onclick="window.location.href='tel:102'">☎️ اتصل بنا</button>
     <a href="report.html" class="highlight">📝 تقديم بلاغ وقوع حادث</a>
-    <a href="indexx.html">📍 مراكز محافظة رام الله والبيرة</a>
-    <button onclick="stayOnPage(event)">🏠 الرئيسية</button> <!-- هذا الزر يبقى في الصفحة نفسها -->
+    <a href="map.html">📍 مراكز محافظة رام الله والبيرة</a>
+    <a href="index.html" onclick="stayOnPage(event)">🏠 الرئيسية</a>
   </nav>
 
-  <!-- من نحن -->
+  <!-- 👩‍🎓 من نحن -->
   <div id="team" class="popup">
     <h3>👩‍🎓 من نحن</h3>
     <p>
-      ملاك حمدان<br>
-      إسراء فواقا<br>
-      تخصص جيوانفورماتكس<br>
-      جامعة بيرزيت<br>
-      0597661969
+      ملاك حمدان\nإسراء فواقا\nتخصص جيوانفورماتكس\nجامعة بيرزيت\n0597661969
     </p>
     <button class="popup-close" onclick="closePopup('team')">إغلاق</button>
   </div>
 
+  <!-- 📬 صناديق الشكاوى والاقتراحات -->
+  <div class="footer-buttons" dir="ltr">
+    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
+    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
+  </div>
+
+  <!-- 📝 Popup الشكوى -->
+  <div id="complaint" class="popup">
+    <h3>💬 صندوق الشكاوى</h3>
+    <textarea id="complaint-text" placeholder="اكتب شكوتك هنا..."></textarea>
+    <button onclick="sendMessage('شكوى', document.getElementById('complaint-text').value)">إرسال</button>
+    <button class="popup-close" onclick="closePopup('complaint')">إغلاق</button>
+  </div>
+
+  <!-- 💡 Popup الاقتراح -->
+  <div id="suggestion" class="popup">
+    <h3>💡 صندوق الاقتراحات</h3>
+    <textarea id="suggestion-text" placeholder="اكتب اقتراحك هنا..."></textarea>
+    <button onclick="sendMessage('اقتراح', document.getElementById('suggestion-text').value)">إرسال</button>
+    <button class="popup-close" onclick="closePopup('suggestion')">إغلاق</button>
+  </div>
+
   <script>
+    /* ===================== تهيئة EmailJS ===================== */
     emailjs.init("k_-XPBpAVOGXECMjt");
 
-    // دالة لمنع الانتقال عند الضغط على الرئيسية
-    function stayOnPage(event) {
-      event.preventDefault(); // هذه الدالة ستمنع الصفحة من الانتقال
+    /* ===================== الوظائف العامة ===================== */
+    function stayOnPage(e) {
+      e.preventDefault();
       alert("أنت بالفعل في الصفحة الرئيسية.");
     }
 
@@ -222,9 +247,16 @@
       document.getElementById(id).style.display = 'none';
     }
 
+    function showAbout() {
+      alert("هذا التطبيق يهدف إلى تسهيل الوصول إلى خدمات الدفاع المدني وتقديم البلاغات بشكل سريع في محافظة رام الله والبيرة.");
+    }
+
+    function showTeam() {
+      openPopup('team');
+    }
+
     function sendMessage(type, message) {
       if (!message.trim()) return alert("يرجى كتابة الرسالة.");
-
       const time = new Date().toLocaleString();
 
       emailjs.send("service_ybbx78g", "template_qkumhvs", {
@@ -238,27 +270,12 @@
         incidentTypes: type
       }).then(() => {
         alert(`✅ تم إرسال ${type} بنجاح`);
-        closePopup(type === "شكوى" ? 'complaint' : 'suggestion');
+        closePopup(type === 'شكوى' ? 'complaint' : 'suggestion');
       }, err => {
         alert("❌ فشل الإرسال");
         console.error(err);
       });
     }
-
-    function showAbout() {
-      alert("هذا التطبيق يهدف إلى تسهيل الوصول إلى خدمات الدفاع المدني وتقديم البلاغات بشكل سريع في محافظة رام الله والبيرة.");
-    }
-
-    function showTeam() {
-      openPopup('team');
-    }
   </script>
-
-  <!-- الأزرار في أسفل الصفحة -->
-  <div class="footer-buttons">
-    <button onclick="openPopup('complaint')">💬 صندوق شكاوي</button>
-    <button onclick="openPopup('suggestion')">💡 صندوق اقتراحات</button>
-  </div>
-
 </body>
 </html>
