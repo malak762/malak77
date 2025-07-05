@@ -1,147 +1,214 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <title>تطبيق مراكز الدفاع المدني</title>
+  <t
+itle>تطبيق مراكز الدفاع المدني – الصفحة الرئيسة</title>
+  <!-- ✅ الأسلوب العام -->
   <style>
+    /* ===================== خلفية الفيديو ===================== */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;          /* اجعل الفيديو خلف كل شيء */
+      object-fit: cover;    /* املأ كامل الشاشة مع الحفاظ على الأبعاد */
+      pointer-events: none; /* حتى لا يعرقل النقرات فوقه */
+    }
+
+    /* ===================== تنسيق الصفحة ===================== */
     body {
       margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      /* استخدام الصورة كخلفية */
-      background: url('fire1.jpeg') no-repeat center center fixed; 
-      background-size: cover; /* تأكد من أن الصورة تغطي كامل الشاشة */
+      font-family: "Arial", sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 0 20px;
+      color: #fff;          /* نص أبيض فوق الفيديو */
     }
+
+    /* ===================== الصندوق الترحيبي ===================== */
     .welcome-container {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       text-align: center;
-      color: white;
-      background-color: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      padding: 25px 35px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      max-width: 600px;
     }
-    .welcome-box {
-      padding: 20px;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.8);
+
+    .welcome-container h1 {
+      margin: 0 0 10px;
+      font-size: 2.2rem;
+      line-height: 1.4;
     }
-    .welcome-box h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
+
+    .welcome-container p {
+      margin: 0 0 25px;
+      font-size: 1.1rem;
     }
-    .welcome-box p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
-    .welcome-box button {
-      padding: 10px 20px;
-      font-size: 1.2em;
-      color: white;
+
+    /* ===================== الأزرار العامة ===================== */
+    button {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 6px 4px;
+      font-size: 1rem;
+      color: #fff;
       background: #ff4500;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background 0.3s ease-in-out;
     }
-    .welcome-box button:hover {
+
+    button:hover {
       background: #e63900;
     }
-    .welcome-box .instructions-button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 1em;
-      color: white;
-      background: #007BFF;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.3s;
+
+    /* زر ثانوي باللون الأزرق */
+    .secondary {
+      background: #007bff;
     }
-    .welcome-box .instructions-button:hover {
+
+    .secondary:hover {
       background: #0056b3;
+    }
+
+    /* ===================== نموذج بلاغ الحريق ===================== */
+    #fire-report-form {
+      display: none;                /* مخفي افتراضياً */
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 30px;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      max-width: 600px;
+    }
+
+    #fire-report-form h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <div class="welcome-container">
-    <div class="welcome-box">
-      <!-- النص في وسط الصفحة -->
-      <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في فلسطين</h1>
-      <p>استكشف مراكز الدفاع المدني في فلسطين وتعرف على خدماتها ومواقعها.</p>
-      
-      <!-- الأزرار للتنقل بين الصفحات -->
-      <button onclick="enterMap()">التعرف على مراكز الدفاع المدني</button>
-      <button onclick="showFireReportForm()">تقديم بلاغ حريق</button>
-      
-      <!-- زر خدمة الطوارئ -->
-      <button class="instructions-button" onclick="callEmergency()">رقم خدمة الطوارئ</button>
-    </div>
+  <!-- 🎥 خلفية فيديو للحريق (صامت ومتكرر) -->
+  <video autoplay muted loop id="bg-video">
+    <source src="fire.mp4" type="video/mp4" />
+    <!-- نص بديل إذا لم يدعم المتصفح الفيديو -->
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- 🖐️ الصندوق الترحيبي -->
+  <div class="welcome-container" id="welcome-box">
+    <h1>أهلاً وسهلاً بكم في تطبيق مراكز الدفاع المدني في فلسطين</h1>
+    <p>استكشف مراكز الدفاع المدني وتعرّف على خدماتها ومواقعها عن قرب.</p>
+
+    <!-- أزرار التنقّل -->
+    <button onclick="enterMap()">التعرف على مراكز الدفاع المدني</button>
+    <button onclick="showFireReportForm()">تقديم بلاغ حريق</button>
+    <button class="secondary" onclick="callEmergency()">رقم خدمة الطوارئ</button>
   </div>
 
-  <!-- نموذج تقديم بلاغ حريق -->
-  <div id="fire-report-form" style="display: none;">
+  <!-- 📝 نموذج تقديم بلاغ حريق -->
+  <div id="fire-report-form">
     <h2>تقديم بلاغ حريق</h2>
-    <label for="fire-location">اختر موقع الحريق:</label><br>
-    <input type="radio" id="current-location" name="location" value="current" onclick="getLocation()"> موقعك الحالي<br>
-    <input type="radio" id="other-location" name="location" value="other" onclick="showLocationInput()"> موقع آخر<br>
+    <label>اختر موقع الحريق:</label><br>
+    <input type="radio" id="current-location" name="location" value="current" onclick="toggleLocationInput(false)" /> موقعك الحالي<br>
+    <input type="radio" id="other-location"   name="location" value="other"   onclick="toggleLocationInput(true)" /> موقع آخر<br>
 
-    <!-- حقل لإدخال الموقع إذا اختار "موقع آخر" -->
+    <!-- حقل إدخال موقع مخصّص -->
     <div id="location-input" style="display:none;">
       <label for="other-location-input">أدخل الموقع:</label>
-      <input type="text" id="other-location-input" placeholder="أدخل الموقع هنا">
+      <input type="text" id="other-location-input" placeholder="اكتب اسم المكان هنا" />
     </div>
 
-    <br>
     <button onclick="submitFireReport()">إرسال بلاغ الحريق</button>
   </div>
 
   <script>
+    /* =============================================================
+       التنقّل إلى صفحة الخريطة
+    ============================================================= */
     function enterMap() {
-      window.location.href = "file:///C:/Users/sbarghouthi.MAIL-SRV/Downloads/finaaaaal/indexar.html";
+      /* استخدمي مسار نسبي بدلاً من مسار مطلق على جهازك */
+      window.location.href = "map.html";
     }
 
+    /* =============================================================
+       إظهار/إخفاء نموذج بلاغ الحريق
+    ============================================================= */
     function showFireReportForm() {
+      document.getElementById("welcome-box").style.display = "none";
       document.getElementById("fire-report-form").style.display = "block";
     }
 
-    function showInstructions() {
-      alert("مرحبًا بك في تطبيق مراكز الدفاع المدني!\n\n1. تصفح الخريطة لاستكشاف مواقع مراكز الدفاع المدني.\n2. انقر على أي مركز لمعرفة التفاصيل بما في ذلك ساعات العمل وبيانات الاتصال.\n3. إذا كنت بحاجة للمساعدة، لا تتردد في استخدام خدمة الطوارئ.\n4. استمتع بالاستفادة من خدمات مراكز الدفاع المدني في مختلف المناطق.");
+    function toggleLocationInput(show) {
+      document.getElementById("location-input").style.display = show ? "block" : "none";
     }
 
+    /* =============================================================
+       استدعاء خدمة الطوارئ
+    ============================================================= */
     function callEmergency() {
       alert("رقم خدمة الطوارئ: 102");
     }
 
-    function getLocation() {
+    /* =============================================================
+       الحصول على موقع المستخدم
+    ============================================================= */
+    function getCurrentPosition(callback) {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          alert("موقعك الحالي: " + position.coords.latitude + ", " + position.coords.longitude);
+        navigator.geolocation.getCurrentPosition(callback, function () {
+          alert("تعذّر تحديد الموقع.");
         });
       } else {
-        alert("لا تدعم هذه المتصفح ميزة الموقع.");
+        alert("متصفحك لا يدعم تحديد الموقع.");
       }
     }
 
-    function showLocationInput() {
-      document.getElementById("location-input").style.display = "block";
-    }
-
+    /* =============================================================
+       إرسال البلاغ
+    ============================================================= */
     function submitFireReport() {
-      const location = document.querySelector('input[name="location"]:checked').value;
-      if (location === 'current') {
-        alert("تم إرسال بلاغ حريق باستخدام الموقع الحالي.");
+      const selected = document.querySelector('input[name="location"]:checked');
+      if (!selected) {
+        alert("يرجى اختيار موقع الحريق.");
+        return;
+      }
+
+      if (selected.value === "current") {
+        getCurrentPosition(function (position) {
+          alert(`تم إرسال بلاغ حريق من الموقع:\nخط العرض: ${position.coords.latitude}\nخط الطول: ${position.coords.longitude}`);
+        });
       } else {
-        const otherLocation = document.getElementById("other-location-input").value;
-        alert("تم إرسال بلاغ حريق باستخدام الموقع: " + otherLocation);
+        const otherLoc = document.getElementById("other-location-input").value.trim();
+        if (!otherLoc) {
+          alert("يرجى إدخال موقع الحريق.");
+          return;
+        }
+        alert("تم إرسال بلاغ حريق من الموقع: " + otherLoc);
       }
     }
   </script>
