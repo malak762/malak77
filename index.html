@@ -237,7 +237,7 @@
         maplink: "—",
         incidentTypes: type
       }).then(() => {
-        alert(✅ تم إرسال ${type} بنجاح);
+        alert(`✅ تم إرسال ${type} بنجاح`);
         closePopup(type === "شكوى" ? 'complaint' : 'suggestion');
       }, err => {
         alert("❌ فشل الإرسال");
